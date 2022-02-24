@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class StudyObject (
     @PrimaryKey(autoGenerate = false)
     val sessionNumber: Int,
+    val wordGroupName: String,
     val mainWord: String,
     val mainWordDescription: String,
     val subsidiaryWord: String,

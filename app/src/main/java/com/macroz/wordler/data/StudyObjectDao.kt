@@ -12,7 +12,8 @@ interface StudyObjectDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addStudyObject(studyObject: StudyObject)
 
-    //TODO pass param to @Querry
-    @Query("SELECT * FROM studyObject_table /*WHERE sessionNumber==param*/")
-    fun getSession(param: Int): List<StudyObject>
+    @Query("SELECT * " +
+            "FROM studyObject_table " +
+            "WHERE sessionNumber==:param AND wordGroupName==:word_group_name")
+    fun getSession(param: Int, word_group_name: String): List<StudyObject>
 }
