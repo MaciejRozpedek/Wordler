@@ -14,6 +14,6 @@ interface StudyObjectDao {
 
     @Query("SELECT * " +
             "FROM studyObject_table " +
-            "WHERE sessionNumber==:param AND wordGroupName==:word_group_name")
-    fun getSession(param: Int, word_group_name: String): List<StudyObject>
+            "WHERE sessionNumber==:session_number AND wordGroupName==:word_group_name")
+    fun getSession(session_number: Int, word_group_name: String): List<StudyObject>
 }
