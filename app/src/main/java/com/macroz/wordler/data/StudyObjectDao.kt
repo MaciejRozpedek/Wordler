@@ -16,4 +16,8 @@ interface StudyObjectDao {
             "FROM studyObject_table " +
             "WHERE sessionNumber==:session_number AND wordGroupName==:word_group_name")
     fun getSession(session_number: Int, word_group_name: String): List<StudyObject>
+
+    //return all wordGroupNames
+    @Query("SELECT DISTINCT wordGroupName FROM studyObject_table")
+    fun getWordGroupNames(): List<StudyObject>
 }
