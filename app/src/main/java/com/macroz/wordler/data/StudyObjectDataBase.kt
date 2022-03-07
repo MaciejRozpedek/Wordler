@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [StudyObject::class], version = 1)
-public abstract class StudyObjectDataBase: RoomDatabase() {
+abstract class StudyObjectDataBase: RoomDatabase() {
     abstract fun studyObjectDao(): StudyObjectDao
 
     companion object {

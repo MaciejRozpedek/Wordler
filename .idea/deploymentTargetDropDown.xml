@@ -7,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\rozpet\.android\avd\samsung_galaxy_A52s_5G_API_30.avd" />
+            <value value="C:\Users\rozpet\.android\avd\samsung_galaxy_A52s_5G_API_27.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-02-23T17:24:30.019025900Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-03-05T18:14:13.614461600Z" />
   </component>
 </project>
