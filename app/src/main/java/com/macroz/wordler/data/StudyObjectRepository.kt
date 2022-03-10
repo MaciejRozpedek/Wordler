@@ -8,7 +8,7 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(studyObject: StudyObject) {
+    fun insert(studyObject: StudyObject) {
         studyObjectDao.addStudyObject(studyObject)
     }
 }

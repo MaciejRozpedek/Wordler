@@ -10,7 +10,7 @@ interface StudyObjectDao {
 
     //TODO If word that user provided already exist app should ask user what to do
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addStudyObject(studyObject: StudyObject)
+    fun addStudyObject(studyObject: StudyObject)
 
     @Query("SELECT * " +
             "FROM studyObject_table " +
