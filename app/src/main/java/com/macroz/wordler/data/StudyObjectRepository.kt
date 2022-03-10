@@ -4,7 +4,7 @@ import androidx.annotation.WorkerThread
 
 class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
 
-    val wordGroupNames: List<StudyObject> = studyObjectDao.getWordGroupNames()
+    val wordGroupNames: List<String> = studyObjectDao.getWordGroupNames()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

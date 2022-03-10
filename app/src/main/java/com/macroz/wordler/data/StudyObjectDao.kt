@@ -19,5 +19,5 @@ interface StudyObjectDao {
 
     //return all wordGroupNames
     @Query("SELECT DISTINCT wordGroupName FROM studyObject_table")
-    fun getWordGroupNames(): List<StudyObject>
+    fun getWordGroupNames(): List<String>
 }

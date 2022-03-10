@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
-import com.macroz.wordler.databinding.FragmentFirstBinding
+import com.macroz.wordler.databinding.SetsOverviewScreenBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class SetsOverviewScreen : Fragment() {
 
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: SetsOverviewScreenBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -26,7 +26,7 @@ class FirstFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = SetsOverviewScreenBinding.inflate(inflater, container, false)
         return binding.root
 
     }
