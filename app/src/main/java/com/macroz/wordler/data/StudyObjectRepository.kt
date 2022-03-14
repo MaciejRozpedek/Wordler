@@ -2,13 +2,20 @@ package com.macroz.wordler.data
 
 import androidx.annotation.WorkerThread
 
+class myValues(
+    val nameOfSetOfWords: String,
+    val numberOfStudyObjectsLearned: Int,
+    val numberOfStudyObjects: Int
+    //something about current session
+)
+
 class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
 
     val wordGroupNames: List<String> = studyObjectDao.getWordGroupNames()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun insert(studyObject: StudyObject) {
-        studyObjectDao.addStudyObject(studyObject)
+    suspend fun insert(studyObject: StudyObject) {
+        studyObjectDao.insert(studyObject)
     }
 }
