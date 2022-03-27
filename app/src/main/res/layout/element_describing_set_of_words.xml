@@ -12,11 +12,11 @@
         <TextView
             android:id="@+id/name_of_set_of_words"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="name_of_set_of_words"
+            android:text="name_of_set_of_wordsg"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

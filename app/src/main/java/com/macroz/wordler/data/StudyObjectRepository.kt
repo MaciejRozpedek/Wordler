@@ -1,6 +1,7 @@
 package com.macroz.wordler.data
 
 import androidx.annotation.WorkerThread
+import kotlinx.coroutines.flow.Flow
 
 class myValues(
     val nameOfSetOfWords: String,
@@ -11,7 +12,7 @@ class myValues(
 
 class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
 
-    val wordGroupNames: List<String> = studyObjectDao.getWordGroupNames()
+    val wordGroupNames: Flow<List<StudyObject>> = studyObjectDao.getWordGroupNames()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

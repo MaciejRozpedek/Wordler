@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.observe
+import com.macroz.wordler.adapters.ElementDescribingSetOfWordsListAdapter
 import com.macroz.wordler.databinding.SetsOverviewScreenBinding
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class SetsOverviewScreen : Fragment() {
-
+    private lateinit var m: MainActivity
     private var _binding: SetsOverviewScreenBinding? = null
 
     // This property is only valid between onCreateView and
@@ -25,8 +27,19 @@ class SetsOverviewScreen : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        m = activity as MainActivity
 
         _binding = SetsOverviewScreenBinding.inflate(inflater, container, false)
+
+        val recyclerView = binding.recyclerviewOfGroups
+        val adapter = ElementDescribingSetOfWordsListAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+
+    m.studyObjectViewModel.wordGroupNames.observe(owner = viewLifecycleOwner) { words ->
+        words.let{ adapter.submitList(it) }
+    }
+
         return binding.root
 
     }
@@ -36,6 +49,10 @@ class SetsOverviewScreen : Fragment() {
 
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_AddGroupFragment)
         }
         view.findViewById<TextView>(R.id.motivatingText).text = "You're the best"
     }

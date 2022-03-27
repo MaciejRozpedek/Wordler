@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StudyObjectDao {
@@ -17,8 +18,9 @@ interface StudyObjectDao {
     fun getSession(session_number: Int, word_group_name: String): List<StudyObject>
 
     //return all wordGroupNames
-    @Query("SELECT DISTINCT wordGroupName FROM studyObject_table")
-    fun getWordGroupNames(): List<String>
+//    @Query("SELECT DISTINCT wordGroupName FROM studyObject_table")
+    @Query("SELECT * FROM studyObject_table")
+    fun getWordGroupNames(): Flow<List<StudyObject>>
 
     //return number of words in word group
     @Query("SELECT COUNT(*) " +
@@ -35,4 +37,7 @@ interface StudyObjectDao {
             "FROM studyObject_table " +
             "WHERE wordGroupName==:word_group_name AND sessionNumber==-1")
     fun getNumberOfWordsInSetNotInUse(word_group_name: String): Int
+
+    @Query("DELETE FROM studyObject_table")
+    suspend fun deleteAll()
 }

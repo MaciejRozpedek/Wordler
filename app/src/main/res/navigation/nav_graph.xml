@@ -14,7 +14,21 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_AddGroupFragment"
+            app:destination="@id/addGroupFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/addGroupFragment"
+        android:name="com.macroz.wordler.AddGroupScreen"
+        android:label="Add New Group"
+        tools:layout="@layout/add_group_screen">
+    <action
+        android:id="@+id/action_addGroupFragment_to_FirstFragment"
+        app:destination="@id/FirstFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.macroz.wordler.SecondFragment"

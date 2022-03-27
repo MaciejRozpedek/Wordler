@@ -4,9 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Database(entities = [StudyObject::class], version = 1)
-abstract class StudyObjectDataBase: RoomDatabase() {
+abstract class StudyObjectDataBase : RoomDatabase() {
 
     abstract fun studyObjectDao(): StudyObjectDao
 
@@ -15,17 +19,57 @@ abstract class StudyObjectDataBase: RoomDatabase() {
         @Volatile
         private var INSTANCE: StudyObjectDataBase? = null
 
-        fun getDatabase(context: Context): StudyObjectDataBase {
+        fun getDatabase(
+            context: Context,
+            scope: CoroutineScope
+        ): StudyObjectDataBase {
             return INSTANCE ?: synchronized(this) {
                 val tempInstance = Room.databaseBuilder(
                     context.applicationContext,
                     StudyObjectDataBase::class.java,
                     "studyObject_database"
-                ).build()
+                )
+                    .addCallback(StudyObjectDatabaseCallback(scope))
+                    .allowMainThreadQueries()
+                    .build()
                 INSTANCE = tempInstance
                 // return instance
                 tempInstance
             }
+        }
+
+        private class StudyObjectDatabaseCallback(
+            private val scope: CoroutineScope
+        ) : RoomDatabase.Callback() {
+            /**
+             * Override the onCreate method to populate the database.
+             */
+            override fun onCreate(db: SupportSQLiteDatabase) {
+                super.onCreate(db)
+                // If you want to keep the data through app restarts,
+                // comment out the following line.
+                INSTANCE?.let { database ->
+                    scope.launch(Dispatchers.IO) {
+                        populateDatabase(database.studyObjectDao())
+                    }
+                }
+            }
+        }
+
+        suspend fun populateDatabase(studyObjectDao: StudyObjectDao) {
+
+            studyObjectDao.deleteAll()
+
+            var studyObject = StudyObject(
+                0, -1, "ACT vocabulary",
+                "", "", "", ""
+            )
+            studyObjectDao.insert(studyObject)
+            studyObject = StudyObject(
+                0, -1, "English C1",
+                "", "", "", ""
+            )
+            studyObjectDao.insert(studyObject)
         }
     }
 }
