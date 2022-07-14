@@ -49,7 +49,7 @@ class AddGroupScreen : Fragment() {
                     0,
                     -1,
                     groupName,
-                    "",
+                    "First Card",
                     "",
                     "",
                     ""

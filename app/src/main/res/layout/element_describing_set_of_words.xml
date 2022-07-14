@@ -10,13 +10,13 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/name_of_set_of_words"
+            android:id="@+id/nameOfSetOfWords"
             android:layout_width="0dp"
             android:layout_height="36dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            android:text="name_of_set_of_wordsg"
+            android:text="name_of_set_of_words"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/progress_in_numbers"
+            android:id="@+id/progressInNumbers"
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:layout_marginStart="32dp"
@@ -34,11 +34,13 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name_of_set_of_words" />
+            app:layout_constraintTop_toBottomOf="@+id/nameOfSetOfWords" />
 
         <ProgressBar
-            android:id="@+id/progress_bar"
+            android:id="@+id/progressBarMain"
             style="@android:style/Widget.ProgressBar.Horizontal"
+            android:progressTint="@color/progress_bar_color_main"
+            android:progressBackgroundTint="@color/progress_bar_color_background"
             android:layout_width="0dp"
             android:layout_height="32dp"
             android:layout_marginStart="32dp"
@@ -49,19 +51,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progress_in_numbers" />
+            app:layout_constraintTop_toBottomOf="@+id/progressInNumbers" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/cardsDueToday"
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="32dp"
-            android:text="something about current session"
+            android:text="int review card(s), int new card(s) due today"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bar" />
+            app:layout_constraintTop_toBottomOf="@+id/progressBarMain" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

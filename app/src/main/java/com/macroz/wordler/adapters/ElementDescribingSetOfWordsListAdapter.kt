@@ -23,7 +23,7 @@ class ElementDescribingSetOfWordsListAdapter : ListAdapter<StudyObject, StudyObj
     }
 
     class StudyObjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val wordItemView: TextView = itemView.findViewById(R.id.name_of_set_of_words)
+        private val wordItemView: TextView = itemView.findViewById(R.id.nameOfSetOfWords)
 
         fun bind(text: String?) {
             wordItemView.text = text
