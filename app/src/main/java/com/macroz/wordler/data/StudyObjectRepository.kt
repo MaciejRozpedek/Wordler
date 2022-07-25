@@ -18,5 +18,6 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
     @WorkerThread
     suspend fun insert(studyObject: StudyObject) {
         studyObjectDao.insert(studyObject)
+        studyObjectDao.updateNumberOfCardsInDeck(studyObject.wordGroupName)
     }
 }

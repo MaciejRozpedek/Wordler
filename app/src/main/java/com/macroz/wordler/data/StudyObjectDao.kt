@@ -18,9 +18,17 @@ interface StudyObjectDao {
     fun getSession(session_number: Int, word_group_name: String): List<StudyObject>
 
     //return all wordGroupNames
-//    @Query("SELECT DISTINCT wordGroupName FROM studyObject_table")
-    @Query("SELECT * FROM studyObject_table")
+    @Query("SELECT *" +
+            " FROM studyObject_table" +
+            " GROUP BY wordGroupName")
     fun getWordGroupNames(): Flow<List<StudyObject>>
+
+    @Query("UPDATE studyObject_table" +
+            " SET numberOfCardsInDeck = numberOfCardsInDeck+1" +
+            " WHERE wordGroupName = :word_group_name")
+    fun updateNumberOfCardsInDeck(word_group_name: String)
+
+
 
     //return number of words in word group
     @Query("SELECT COUNT(*) " +

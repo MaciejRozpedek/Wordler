@@ -12,5 +12,6 @@ data class StudyObject (
     val mainWord: String,
     val mainWordDescription: String,
     val subsidiaryWord: String,
-    val subsidiaryWordDescription: String
+    val subsidiaryWordDescription: String,
+    val numberOfCardsInDeck: Int
 )

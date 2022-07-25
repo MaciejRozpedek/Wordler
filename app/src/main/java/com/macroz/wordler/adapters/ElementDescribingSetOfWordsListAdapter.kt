@@ -19,14 +19,16 @@ class ElementDescribingSetOfWordsListAdapter : ListAdapter<StudyObject, StudyObj
 
     override fun onBindViewHolder(holder: StudyObjectViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.wordGroupName)
+        holder.bind(current.wordGroupName, current.numberOfCardsInDeck)
     }
 
     class StudyObjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val wordItemView: TextView = itemView.findViewById(R.id.nameOfSetOfWords)
+        private val progressInNumbers: TextView = itemView.findViewById(R.id.progressInNumbers)
 
-        fun bind(text: String?) {
+        fun bind(text: String?, numberOfCardsInDeck: Int?) {
             wordItemView.text = text
+            progressInNumbers.text = "int out of " + numberOfCardsInDeck.toString() + " cards learned"
         }
 
         companion object {
