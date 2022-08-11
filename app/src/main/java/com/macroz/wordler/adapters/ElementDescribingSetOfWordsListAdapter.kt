@@ -3,15 +3,16 @@ package com.macroz.wordler.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.macroz.wordler.R
 import com.macroz.wordler.adapters.ElementDescribingSetOfWordsListAdapter.StudyObjectViewHolder
-import com.macroz.wordler.data.StudyObject
+import com.macroz.wordler.data.myValues
 
-class ElementDescribingSetOfWordsListAdapter : ListAdapter<StudyObject, StudyObjectViewHolder>(WORDS_COMPARATOR) {
+class ElementDescribingSetOfWordsListAdapter : ListAdapter<myValues, StudyObjectViewHolder>(WORDS_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudyObjectViewHolder {
         return StudyObjectViewHolder.create(parent)
@@ -19,16 +20,19 @@ class ElementDescribingSetOfWordsListAdapter : ListAdapter<StudyObject, StudyObj
 
     override fun onBindViewHolder(holder: StudyObjectViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.wordGroupName, current.numberOfCardsInDeck)
+        holder.bind(current.nameOfSetOfWords, current.numberOfCards, current.numberOfCardsLearned)
     }
 
     class StudyObjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val wordItemView: TextView = itemView.findViewById(R.id.nameOfSetOfWords)
         private val progressInNumbers: TextView = itemView.findViewById(R.id.progressInNumbers)
+        private val progressBarMain: ProgressBar = itemView.findViewById(R.id.progressBarMain)
+        private val cardsDueToday: TextView = itemView.findViewById(R.id.cardsDueToday)
 
-        fun bind(text: String?, numberOfCardsInDeck: Int?) {
-            wordItemView.text = text
-            progressInNumbers.text = "int out of " + numberOfCardsInDeck.toString() + " cards learned"
+        fun bind(nameOfSetOfWords: String?, numberOfCardsInDeck: Int, numberOfCardsLearned: Int) {
+            wordItemView.text = nameOfSetOfWords
+            progressInNumbers.text = "$numberOfCardsLearned out of $numberOfCardsInDeck cards learned"
+            progressBarMain.progress = 100*numberOfCardsLearned/numberOfCardsInDeck
         }
 
         companion object {
@@ -41,13 +45,13 @@ class ElementDescribingSetOfWordsListAdapter : ListAdapter<StudyObject, StudyObj
     }
 
     companion object {
-        private val WORDS_COMPARATOR = object : DiffUtil.ItemCallback<StudyObject>() {
-            override fun areItemsTheSame(oldItem: StudyObject, newItem: StudyObject): Boolean {
+        private val WORDS_COMPARATOR = object : DiffUtil.ItemCallback<myValues>() {
+            override fun areItemsTheSame(oldItem: myValues, newItem: myValues): Boolean {
                 return oldItem === newItem
             }
 
-            override fun areContentsTheSame(oldItem: StudyObject, newItem: StudyObject): Boolean {
-                return oldItem.wordGroupName == newItem.wordGroupName
+            override fun areContentsTheSame(oldItem: myValues, newItem: myValues): Boolean {
+                return oldItem.nameOfSetOfWords == newItem.nameOfSetOfWords
             }
         }
     }

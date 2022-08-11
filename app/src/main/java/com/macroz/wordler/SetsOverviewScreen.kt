@@ -35,10 +35,8 @@ class SetsOverviewScreen : Fragment() {
         val adapter = ElementDescribingSetOfWordsListAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter.submitList(m.studyObjectViewModel.decksData)
 
-    m.studyObjectViewModel.wordGroupNames.observe(owner = viewLifecycleOwner) { words ->
-        words.let{ adapter.submitList(it) }
-    }
 
         return binding.root
 

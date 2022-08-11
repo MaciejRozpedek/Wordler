@@ -18,33 +18,28 @@ interface StudyObjectDao {
     fun getSession(session_number: Int, word_group_name: String): List<StudyObject>
 
     //return all wordGroupNames
-    @Query("SELECT *" +
+    @Query("SELECT wordGroupName" +
             " FROM studyObject_table" +
             " GROUP BY wordGroupName")
-    fun getWordGroupNames(): Flow<List<StudyObject>>
-
-    @Query("UPDATE studyObject_table" +
-            " SET numberOfCardsInDeck = numberOfCardsInDeck+1" +
-            " WHERE wordGroupName = :word_group_name")
-    fun updateNumberOfCardsInDeck(word_group_name: String)
-
-
+    fun getDecksNames(): MutableList<String>
 
     //return number of words in word group
     @Query("SELECT COUNT(*) " +
             "FROM studyObject_table " +
             "WHERE wordGroupName==:word_group_name")
-    fun getNumberOfWordsInSet(word_group_name: String): Int
+    fun getNumberOfWordsInDeck(word_group_name: String): Int
 
     @Query("SELECT COUNT(*) " +
             "FROM studyObject_table " +
             "WHERE wordGroupName==:word_group_name AND sessionNumber!=-1")
-    fun getNumberOfWordsInSetInUse(word_group_name: String):Int
+    fun getNumberOfWordsInDeckLearned(word_group_name: String):Int
+
+
 
     @Query("SELECT COUNT(*) " +
             "FROM studyObject_table " +
             "WHERE wordGroupName==:word_group_name AND sessionNumber==-1")
-    fun getNumberOfWordsInSetNotInUse(word_group_name: String): Int
+    fun getNumberOfWordsInDeckNotInUse(word_group_name: String): Int
 
     @Query("DELETE FROM studyObject_table")
     suspend fun deleteAll()
