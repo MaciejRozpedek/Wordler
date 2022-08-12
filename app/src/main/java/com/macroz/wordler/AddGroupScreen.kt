@@ -52,8 +52,7 @@ class AddGroupScreen : Fragment() {
                     "First Card",
                     "",
                     "",
-                    "",
-                    1
+                    ""
                 )
                 m.studyObjectViewModel.insert(studyObject)
             }

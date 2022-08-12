@@ -7,11 +7,10 @@ import androidx.room.PrimaryKey
 data class StudyObject (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val sessionNumber: Int,//-1 = not in session yet
+    var sessionNumber: Int,//-1 = not in session yet
     val wordGroupName: String,
     val mainWord: String,
     val mainWordDescription: String,
     val subsidiaryWord: String,
-    val subsidiaryWordDescription: String,
-    val numberOfCardsInDeck: Int
+    val subsidiaryWordDescription: String
 )

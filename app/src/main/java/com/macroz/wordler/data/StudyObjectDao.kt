@@ -17,6 +17,11 @@ interface StudyObjectDao {
             "WHERE sessionNumber==:session_number AND wordGroupName==:word_group_name")
     fun getSession(session_number: Int, word_group_name: String): List<StudyObject>
 
+    @Query("SELECT COUNT(*) " +
+            "FROM studyObject_table " +
+            "WHERE sessionNumber==:session_number AND wordGroupName==:word_group_name")
+    fun getNumOfCardsInSession(session_number: Int, word_group_name: String): Int
+
     //return all wordGroupNames
     @Query("SELECT wordGroupName" +
             " FROM studyObject_table" +
