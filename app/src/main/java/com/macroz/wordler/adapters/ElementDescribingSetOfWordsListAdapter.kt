@@ -35,7 +35,7 @@ class ElementDescribingSetOfWordsListAdapter :
     }
 
     class StudyObjectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val wordItemView: TextView = itemView.findViewById(R.id.nameOfSetOfWords)
+        private val deckNameTextView: TextView = itemView.findViewById(R.id.nameOfSetOfWords)
         private val progressInNumbers: TextView = itemView.findViewById(R.id.progressInNumbers)
         private val progressBarMain: ProgressBar = itemView.findViewById(R.id.progressBarMain)
         private val cardsDueToday: TextView = itemView.findViewById(R.id.cardsDueToday)
@@ -45,7 +45,7 @@ class ElementDescribingSetOfWordsListAdapter :
             nameOfDeck: String?, numOfCardsInDeck: Int, numOfCardsLearned: Int,
             numOfNewCardsLeft: Int, numOfCardsInSession: Int
         ) {
-            wordItemView.text = nameOfDeck
+            deckNameTextView.text = nameOfDeck
             progressInNumbers.text = "$numOfCardsLearned out of $numOfCardsInDeck cards learned"
             progressBarMain.progress = 100 * numOfCardsLearned / numOfCardsInDeck
             cardsDueToday.text =
@@ -53,6 +53,11 @@ class ElementDescribingSetOfWordsListAdapter :
             itemView.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putString("deckName", nameOfDeck)
+                bundle.putInt("numOfCardsLearned", numOfCardsLearned)
+                bundle.putInt("numOfCardsInDeck", numOfCardsInDeck)
+                bundle.putInt("progress", progressBarMain.progress)
+                bundle.putInt("numOfNewCardsLeft", numOfNewCardsLeft)
+                bundle.putInt("numOfCardsInSession", numOfCardsInSession)
 
                 val navController: NavController = Navigation.findNavController(itemView)
                 navController.navigate(R.id.action_FirstFragment_to_SetInfoScreen, bundle)

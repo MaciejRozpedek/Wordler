@@ -7,7 +7,7 @@
     tools:context=".SetInfoScreen">
 
     <TextView
-        android:id="@+id/reviewCards"
+        android:id="@+id/reviewCardsTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newCards" />
+        app:layout_constraintTop_toBottomOf="@+id/newCardsTextView" />
 
     <TextView
         android:id="@+id/newCardsLearned"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/newCardsLearned" />
 
     <TextView
-        android:id="@+id/newCards"
+        android:id="@+id/newCardsTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reviewCards" />
+        app:layout_constraintTop_toBottomOf="@+id/reviewCardsTextView" />
 
     <Button
         android:id="@+id/showWordListButton"
