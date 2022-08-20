@@ -47,7 +47,7 @@ class AddGroupScreen : Fragment() {
                 val groupName =editWordView.text.toString()
                 val studyObject = StudyObject(
                     0,
-                    -1,
+                    0,
                     groupName,
                     "First Card",
                     "",

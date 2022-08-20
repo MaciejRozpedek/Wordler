@@ -1,16 +1,20 @@
 package com.macroz.wordler.adapters
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.macroz.wordler.R
 import com.macroz.wordler.adapters.ElementDescribingSetOfWordsListAdapter.StudyObjectViewHolder
 import com.macroz.wordler.data.MyValues
+
 
 class ElementDescribingSetOfWordsListAdapter :
     ListAdapter<MyValues, StudyObjectViewHolder>(WORDS_COMPARATOR) {
@@ -36,11 +40,6 @@ class ElementDescribingSetOfWordsListAdapter :
         private val progressBarMain: ProgressBar = itemView.findViewById(R.id.progressBarMain)
         private val cardsDueToday: TextView = itemView.findViewById(R.id.cardsDueToday)
 
-        init {
-            itemView.setOnClickListener {
-
-            }
-        }
 
         fun bind(
             nameOfDeck: String?, numOfCardsInDeck: Int, numOfCardsLearned: Int,
@@ -51,6 +50,14 @@ class ElementDescribingSetOfWordsListAdapter :
             progressBarMain.progress = 100 * numOfCardsLearned / numOfCardsInDeck
             cardsDueToday.text =
                 "$numOfCardsInSession review card(s), $numOfNewCardsLeft new card(s) due today"
+            itemView.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("deckName", nameOfDeck)
+
+                val navController: NavController = Navigation.findNavController(itemView)
+                navController.navigate(R.id.action_FirstFragment_to_SetInfoScreen, bundle)
+                println("Just Clicked position number $adapterPosition!!!")
+            }
         }
 
         companion object {

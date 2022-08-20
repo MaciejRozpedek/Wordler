@@ -17,6 +17,20 @@
         <action
             android:id="@+id/action_FirstFragment_to_AddGroupFragment"
             app:destination="@id/addGroupFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_SetInfoScreen"
+            app:destination="@id/SetInfoScreenFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SetInfoScreenFragment"
+        android:name="com.macroz.wordler.SetInfoScreen"
+        android:label=""
+        tools:layout="@layout/set_info_screen">
+
+        <action
+            android:id="@+id/action_SetInfoScreen_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
 
     <fragment
@@ -24,9 +38,9 @@
         android:name="com.macroz.wordler.AddGroupScreen"
         android:label="Add New Group"
         tools:layout="@layout/add_group_screen">
-    <action
-        android:id="@+id/action_addGroupFragment_to_FirstFragment"
-        app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_addGroupFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
     </fragment>
 
     <fragment
