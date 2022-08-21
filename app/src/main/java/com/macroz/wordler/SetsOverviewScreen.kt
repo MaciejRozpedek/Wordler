@@ -54,6 +54,17 @@ class SetsOverviewScreen : Fragment() {
         view.findViewById<TextView>(R.id.motivatingText).text = "You're the best"
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val recyclerView = binding.recyclerviewOfGroups
+        val adapter = ElementDescribingSetOfWordsListAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        m.studyObjectViewModel.updateDecksData()
+        adapter.submitList(m.studyObjectViewModel.decksData)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

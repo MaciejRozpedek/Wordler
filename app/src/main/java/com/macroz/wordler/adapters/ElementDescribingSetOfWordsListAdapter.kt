@@ -27,7 +27,7 @@ class ElementDescribingSetOfWordsListAdapter :
         val current = getItem(position)
         holder.bind(
             current.nameOfSetOfWords,
-            current.numberOfCards,
+            current.numberOfCardsInDeck,
             current.numberOfCardsLearned,
             current.numOfNewCardsLeft,
             current.numOfCardsInSession

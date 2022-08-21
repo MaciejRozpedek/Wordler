@@ -13,6 +13,15 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
 
     var decksData: MutableList<MyValues> = repository.decksData
 
+    fun updateDecksData(){
+        repository.updateDecksData()
+        decksData = repository.decksData
+    }
+
+    fun getDeckValues(deckName: String): MyValues{
+        return repository.getDeckValues(deckName)
+    }
+
     fun insert(studyObject: StudyObject) = viewModelScope.launch {
         repository.insert(studyObject)
     }
