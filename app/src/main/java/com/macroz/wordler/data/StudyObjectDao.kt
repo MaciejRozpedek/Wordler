@@ -4,13 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StudyObjectDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(studyObject: StudyObject)
+
+    @Query("UPDATE studyObject_table " +
+            "SET sessionNumber = -1 " +
+            "WHERE wordGroupName=:deckName")
+    fun resetDeck(deckName: String)
 
     @Query("SELECT * " +
             "FROM studyObject_table " +

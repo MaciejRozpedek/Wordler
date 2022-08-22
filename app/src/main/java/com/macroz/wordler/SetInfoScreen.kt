@@ -61,7 +61,6 @@ class SetInfoScreen : Fragment() {
             alert.setTitle("New Cards Each Day")
 //            alert.setMessage("Message")
             // Set an EditText view to get user input
-            // Set an EditText view to get user input
             val input = EditText(context)
             alert.setView(input)
             alert.setPositiveButton("Set",
@@ -71,10 +70,16 @@ class SetInfoScreen : Fragment() {
                     if (value != null) {
                         arguments?.getString("deckName")
                             ?.let { it1 -> prefs.setNumOfNewCards(it1, value) }
+                        Toast.makeText(
+                            m.applicationContext,
+                            "Changed successfully",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        onResume()
                     } else {
                         Toast.makeText(
                             m.applicationContext,
-                            "Word not saved because it is empty.",
+                            "Changing new cards per day limit failed.",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -85,6 +90,42 @@ class SetInfoScreen : Fragment() {
                 DialogInterface.OnClickListener { dialog, whichButton ->
                     // Canceled.
                 })
+
+            alert.show()
+        }
+
+        binding.resetButton.setOnClickListener {
+            val alert: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)
+            alert.setTitle("Reset this deck?")
+            alert.setMessage("You are about to reset all progress on this deck. To continue, type" +
+                    " \"RESET\" and choose \"OK\"")
+            // Set an EditText view to get user input\
+            val input = EditText(context)
+            alert.setView(input)
+            alert.setPositiveButton("OK") { _, _ ->
+                val pom: String = input.text.toString()
+                if (pom == "RESET") {
+                    m.studyObjectViewModel.resetDeck(requireArguments().getString("deckName")!!)
+                    Toast.makeText(
+                        m.applicationContext,
+                        "Deck successfully reset",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    onResume()
+                } else {
+                    Toast.makeText(
+                        m.applicationContext,
+                        "Resetting deck failed",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                // Do something with value!
+            }
+
+            alert.setNegativeButton("Cancel"
+            ) { _, _ ->
+                // Canceled.
+            }
 
             alert.show()
         }

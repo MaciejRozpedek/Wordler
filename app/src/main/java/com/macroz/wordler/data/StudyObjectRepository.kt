@@ -33,6 +33,10 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
         return deckValues
     }
 
+    fun resetDeck(deckName: String){
+        studyObjectDao.resetDeck(deckName)
+    }
+
     private fun pom(): MutableList<MyValues> {
         val wordGroupNames: MutableList<String> = studyObjectDao.getDecksNames()
         val decksDataPom: MutableList<MyValues> = mutableListOf()

@@ -22,6 +22,10 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
         return repository.getDeckValues(deckName)
     }
 
+    fun resetDeck(deckName: String){
+        repository.resetDeck(deckName)
+    }
+
     fun insert(studyObject: StudyObject) = viewModelScope.launch {
         repository.insert(studyObject)
     }
