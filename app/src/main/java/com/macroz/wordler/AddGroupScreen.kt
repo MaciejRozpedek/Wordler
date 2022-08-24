@@ -49,10 +49,10 @@ class AddGroupScreen : Fragment() {
                     0,
                     0,
                     groupName,
-                    "First Card",
-                    "",
-                    "",
-                    ""
+                    "MAIN",
+                    "MAIN_DESCRIPTION",
+                    "SUBS",
+                    "SUBS_DESCRIPTION"
                 )
                 m.studyObjectViewModel.insert(studyObject)
             }
