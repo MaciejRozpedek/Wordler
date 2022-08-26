@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.macroz.wordler.adapters.WordListElementAdapter
 import com.macroz.wordler.data.StudyObject
-import com.macroz.wordler.databinding.SetsOverviewScreenBinding
+import com.macroz.wordler.databinding.WordListScreenBinding
 
 class WordListScreen : Fragment() {
     private lateinit var m: MainActivity
-    private var _binding: SetsOverviewScreenBinding? = null
+    private var _binding: WordListScreenBinding? = null
 
     private val binding get() = _binding!!
 
@@ -23,7 +23,7 @@ class WordListScreen : Fragment() {
     ): View? {
         m = activity as MainActivity
 
-        _binding = SetsOverviewScreenBinding.inflate(inflater, container, false)
+        _binding = WordListScreenBinding.inflate(inflater, container, false)
 
         (requireActivity() as AppCompatActivity).supportActionBar?.title =
             arguments?.getString("deckName")
@@ -35,6 +35,10 @@ class WordListScreen : Fragment() {
         val allCardsInDeck: List<StudyObject> = m.studyObjectViewModel.getAllCardsInDeck(deckName)
         adapter.submitList(allCardsInDeck)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
