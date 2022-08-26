@@ -54,6 +54,36 @@ class AddGroupScreen : Fragment() {
                     "SUBS",
                     "SUBS_DESCRIPTION"
                 )
+                if(studyObject.wordGroupName == "cos"){ // for testing
+                    repeat(10){
+                        m.studyObjectViewModel.insert(
+                            StudyObject(
+                                it + 732100, -1, "cos",
+                                "m", "md", "s", "sd"
+                            )
+                        )
+//                        m.studyObjectViewModel.insert(studyObject)
+                    }
+                    studyObject.sessionNumber = 1
+                    repeat(7){
+                        m.studyObjectViewModel.insert(
+                            StudyObject(
+                                it + 1000001, 0, "cos",
+                                "m", "md", "s", "sd"
+                            )
+                        )
+//                        m.studyObjectViewModel.insert(studyObject)
+                    }
+                    repeat(3){
+                        m.studyObjectViewModel.insert(
+                            StudyObject(
+                                it + 2000001, 1, "cos",
+                                "m", "md", "s", "sd"
+                            )
+                        )
+//                        m.studyObjectViewModel.insert(studyObject)
+                    }
+                } else
                 m.studyObjectViewModel.insert(studyObject)
             }
             findNavController().navigate(R.id.action_addGroupFragment_to_FirstFragment)

@@ -37,6 +37,10 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
         studyObjectDao.resetDeck(deckName)
     }
 
+    fun getAllCardsInDeck(deckName: String): List<StudyObject>{
+        return studyObjectDao.getAllCardsInDeck(deckName)
+    }
+
     private fun pom(): MutableList<MyValues> {
         val wordGroupNames: MutableList<String> = studyObjectDao.getDecksNames()
         val decksDataPom: MutableList<MyValues> = mutableListOf()

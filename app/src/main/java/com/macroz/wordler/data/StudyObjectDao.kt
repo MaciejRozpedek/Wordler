@@ -11,9 +11,14 @@ interface StudyObjectDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(studyObject: StudyObject)
 
+    @Query("SELECT *" +
+            "FROM studyObject_table " +
+            "WHERE wordGroupName==:deckName")
+    fun getAllCardsInDeck(deckName: String): List<StudyObject>
+
     @Query("UPDATE studyObject_table " +
             "SET sessionNumber = -1 " +
-            "WHERE wordGroupName=:deckName")
+            "WHERE wordGroupName==:deckName")
     fun resetDeck(deckName: String)
 
     @Query("SELECT * " +

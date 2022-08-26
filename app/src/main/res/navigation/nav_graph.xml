@@ -31,7 +31,16 @@
         <action
             android:id="@+id/action_SetInfoScreen_to_FirstFragment"
             app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_SetInfoScreen_to_WordListScreen"
+            app:destination="@id/WordListScreen" />
     </fragment>
+
+    <fragment
+        android:id="@+id/WordListScreen"
+        android:name="com.macroz.wordler.WordListScreen"
+        android:label=""
+        tools:layout="@layout/word_list_screen" />
 
     <fragment
         android:id="@+id/addGroupFragment"

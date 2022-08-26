@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.macroz.wordler.data.MyValues
 import com.macroz.wordler.databinding.SetInfoScreenBinding
 
@@ -55,6 +57,14 @@ class SetInfoScreen : Fragment() {
         progressBarInfo.progress = arguments?.getInt("progress")!!
         newCardsTextView.text = "New Cards Today: ${arguments?.getInt("numOfNewCardsLeft")}"
         reviewCardsTextView.text = "Review Cards Today: ${arguments?.getInt("numOfCardsInSession")}"
+
+        binding.showWordListButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("deckName", arguments?.getString("deckName"))
+
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_SetInfoScreen_to_WordListScreen, bundle)
+        }
 
         binding.changeNewCardsPerDayButton.setOnClickListener {
             val alert: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)

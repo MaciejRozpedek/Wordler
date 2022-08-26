@@ -26,6 +26,10 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
         repository.resetDeck(deckName)
     }
 
+    fun getAllCardsInDeck(deckName: String): List<StudyObject>{
+        return repository.getAllCardsInDeck(deckName)
+    }
+
     fun insert(studyObject: StudyObject) = viewModelScope.launch {
         repository.insert(studyObject)
     }
