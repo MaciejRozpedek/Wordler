@@ -64,6 +64,19 @@ abstract class StudyObjectDataBase : RoomDatabase() {
                 0, -1, "ACT vocabulary",
                 "m", "md", "s", "sd"
             )
+            repeat(50) {
+                studyObjectDao.insert(
+                    StudyObject(
+                        it+2345,
+                        -1,
+                        "Studying Test",
+                        "main${it + 1}",
+                        "mainDesc${it + 1}",
+                        "subs${it + 1}",
+                        "subsDesc${it + 1}"
+                    )
+                )
+            }
             repeat(10) {
                 studyObjectDao.insert(
                     StudyObject(
