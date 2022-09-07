@@ -6,7 +6,22 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/sessionInfoTextView"
+        android:id="@+id/answerTextView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="Answer (and description)"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainWordTextView2" />
+
+    <TextView
+        android:id="@+id/sessionInfoTextView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -19,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBarLearn"
+        android:id="@+id/progressBarAnswer"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="0dp"
         android:layout_height="32dp"
@@ -31,10 +46,10 @@
         android:progressTint="@color/progress_bar_color_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessionInfoTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/sessionInfoTextView2" />
 
     <TextView
-        android:id="@+id/mainWordTextView"
+        android:id="@+id/mainWordTextView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -45,19 +60,42 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBarLearn" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBarAnswer" />
 
     <Button
-        android:id="@+id/showAnswerButton"
+        android:id="@+id/knowledgeThree"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="256dp"
-        android:height="64dp"
-        android:elegantTextHeight="false"
-        android:text="show answer"
+        android:layout_marginBottom="144dp"
+        android:height="96dp"
+        android:text="EASY (1 DAY)"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/knowledgeTwo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:height="96dp"
+        android:text="GOOD (IN A FEW MINUTES)"
+        app:layout_constraintBottom_toTopOf="@+id/knowledgeThree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/knowledgeOne"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:height="96dp"
+        android:text="DIDN'T KNOW (SEE IT AGAIN)"
+        app:layout_constraintBottom_toTopOf="@+id/knowledgeTwo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
