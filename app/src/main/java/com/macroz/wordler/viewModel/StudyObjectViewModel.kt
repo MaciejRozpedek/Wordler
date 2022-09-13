@@ -13,20 +13,36 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
 
     var decksData: MutableList<MyValues> = repository.decksData
 
-    fun updateDecksData(){
+    fun updateDecksData() {
         repository.updateDecksData()
         decksData = repository.decksData
     }
 
-    fun getDeckValues(deckName: String): MyValues{
+    fun updateNumOfCardsInSession(deckName: String) {
+        repository.updateNumOfCardsInSession(deckName)
+    }
+
+    fun getNumOfCardsInSession(deckName: String): Int {
+        return repository.getNumOfCardsInSession(deckName)
+    }
+
+    fun recoverNumOfCardsInSession(deckName: String): Int {
+        return repository.recoverNumOfCardsInSession(deckName)
+    }
+
+    fun getNumOfCardsLearnedInSession(deckName: String): Int {
+        return repository.getNumOfCardsLearnedInSession(deckName)
+    }
+
+    fun getDeckValues(deckName: String): MyValues {
         return repository.getDeckValues(deckName)
     }
 
-    fun resetDeck(deckName: String){
+    fun resetDeck(deckName: String) {
         repository.resetDeck(deckName)
     }
 
-    fun getAllCardsInDeck(deckName: String): List<StudyObject>{
+    fun getAllCardsInDeck(deckName: String): List<StudyObject> {
         return repository.getAllCardsInDeck(deckName)
     }
 
@@ -35,9 +51,10 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
     }
 }
 
-class StudyObjectViewModelFactory(private val repository: StudyObjectRepository): ViewModelProvider.Factory {
-    override fun <T: ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(StudyObjectViewModel::class.java)) {
+class StudyObjectViewModelFactory(private val repository: StudyObjectRepository) :
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(StudyObjectViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return StudyObjectViewModel(repository) as T
         }

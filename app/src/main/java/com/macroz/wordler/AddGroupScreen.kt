@@ -45,6 +45,7 @@ class AddGroupScreen : Fragment() {
                 ).show()
             } else {
                 val groupName =editWordView.text.toString()
+                prefs.setNumOfNewCards(groupName, 10)
                 val studyObject = StudyObject(
                     0,
                     0,

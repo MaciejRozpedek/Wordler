@@ -9,14 +9,13 @@ class Prefs(context: Context) {
     private val editor = preferences.edit()
 
     fun setNumOfNewCards(deckName: String, numOfCards: Int) {
-        val pom: Int = preferences.getInt(deckName, -1)
+        val pom: Int = preferences.getInt("NUM_OF_NEW_CARDS_LEFT_$deckName", 10)
         editor.remove("NUM_OF_NEW_CARDS_$deckName")
         editor.putInt("NUM_OF_NEW_CARDS_$deckName", numOfCards)
         editor.commit()
-        if (pom == -1) {
-            setNumOfNewCardsLeft(deckName, numOfCards)
-        } else {
+        if (pom != numOfCards) {
             setNumOfNewCardsLeft(deckName, numOfCards - pom + getNumOfNewCardsLeft(deckName))
+            setNumOfCardsInSession(deckName, numOfCards - pom + getNumOfCardsInSession(deckName))
         }
     }
 
@@ -27,11 +26,21 @@ class Prefs(context: Context) {
     }
 
     fun getNumOfNewCards(deckName: String): Int {
-        return preferences.getInt("NUM_OF_NEW_CARDS_$deckName", -1)
+        return preferences.getInt("NUM_OF_NEW_CARDS_$deckName", 10)
     }
 
     fun getNumOfNewCardsLeft(deckName: String): Int {
         return preferences.getInt("NUM_OF_NEW_CARDS_LEFT_$deckName", 10)
+    }
+
+    fun setNumOfCardsInSession(deckName: String, numOfCardsInSession: Int) {
+        editor.remove("NUM_OF_CARDS_IN_SESSION_$deckName")
+        editor.putInt("NUM_OF_CARDS_IN_SESSION_$deckName", numOfCardsInSession)
+        editor.commit()
+    }
+
+    fun getNumOfCardsInSession(deckName: String): Int {
+        return preferences.getInt("NUM_OF_CARDS_IN_SESSION_$deckName", 0)
     }
 
     fun getSessionNum(deckName: String): Int {

@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -48,6 +45,8 @@ class SetInfoScreen : Fragment() {
         val progressBarInfo: ProgressBar = view.findViewById(R.id.progressBarInfo)
         val newCardsTextView: TextView = view.findViewById(R.id.newCardsTextView)
         val reviewCardsTextView: TextView = view.findViewById(R.id.reviewCardsTextView)
+        val startStudyingButton: Button = view.findViewById(R.id.startStudyingButton)
+        val deckName = arguments?.getString("deckName")!!
 
         newCardsLearned.text = "New Cards Learned: ${
             arguments?.getInt("numOfCardsLearned")
@@ -57,6 +56,35 @@ class SetInfoScreen : Fragment() {
         progressBarInfo.progress = arguments?.getInt("progress")!!
         newCardsTextView.text = "New Cards Today: ${arguments?.getInt("numOfNewCardsLeft")}"
         reviewCardsTextView.text = "Review Cards Today: ${arguments?.getInt("numOfCardsInSession")}"
+
+// this will be called when creating deck, but for now it stays here TODO()
+        prefs.setNumOfNewCards(deckName, 10)
+        m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+// END
+
+        if(m.studyObjectViewModel.getNumOfCardsInSession(deckName) == 0){
+            startStudyingButton.text = "GET MORE CARDS"
+            binding.startStudyingButton.setOnClickListener {
+                startStudyingButton.text = "START STUDYING"
+                prefs.nextSession(deckName)
+                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+                binding.startStudyingButton.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putString("deckName", arguments?.getString("deckName"))
+
+                    val navController: NavController = findNavController()
+                    navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
+                }
+            }
+        } else {
+            binding.startStudyingButton.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("deckName", arguments?.getString("deckName"))
+
+                val navController: NavController = findNavController()
+                navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
+            }
+        }
 
         binding.showWordListButton.setOnClickListener {
             val bundle = Bundle()

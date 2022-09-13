@@ -22,6 +22,31 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
         decksData = pom()
     }
 
+    fun updateNumOfCardsInSession(deckName: String){
+        val sessionNum = prefs.getSessionNum(deckName)
+        val numOfNewCards: Int = prefs.getNumOfNewCards(deckName)
+        val cardsLeft: Int = studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
+        prefs.setNumOfCardsInSession(deckName, cardsLeft + numOfNewCards)
+    }
+
+    fun getNumOfCardsInSession(deckName: String): Int {
+        val sessionNum = prefs.getSessionNum(deckName)
+        val numOfNewCards: Int = prefs.getNumOfNewCards(deckName)
+        val cardsLeft: Int = studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
+        return cardsLeft + numOfNewCards
+    }
+
+    fun recoverNumOfCardsInSession(deckName: String): Int {
+        return prefs.getNumOfCardsInSession(deckName)
+    }
+
+    fun getNumOfCardsLearnedInSession(deckName: String): Int {
+        val sessionNum = prefs.getSessionNum(deckName)
+        val numOfNewCards: Int = prefs.getNumOfNewCards(deckName)
+        val cardsLeft: Int = studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
+        return recoverNumOfCardsInSession(deckName) - numOfNewCards - cardsLeft
+    }
+
     fun getDeckValues(deckName: String): MyValues{
         val deckValues = MyValues("", 1, 1, 1, 1)
         deckValues.nameOfSetOfWords = deckName
