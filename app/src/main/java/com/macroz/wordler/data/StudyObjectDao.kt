@@ -16,6 +16,18 @@ interface StudyObjectDao {
             "WHERE wordGroupName==:deckName")
     fun getAllCardsInDeck(deckName: String): List<StudyObject>
 
+    @Query("SELECT *" +
+            "FROM studyObject_table " +
+            "WHERE sessionNumber==:session_number AND wordGroupName==:deckName " +
+            "ORDER BY RANDOM() " +
+            "LIMIT 1")
+    fun getStudyObject(session_number: Int, deckName: String): StudyObject
+
+    @Query("SELECT COUNT(*)" +
+            "FROM studyObject_table " +
+            "WHERE sessionNumber==:session_number AND wordGroupName==:deckName")
+    fun getNumOfStudyObjectsInSession(session_number: Int, deckName: String): Int
+
     @Query("UPDATE studyObject_table " +
             "SET sessionNumber = -1 " +
             "WHERE wordGroupName==:deckName")

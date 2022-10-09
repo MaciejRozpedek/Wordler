@@ -31,9 +31,9 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
 
     fun getNumOfCardsInSession(deckName: String): Int {
         val sessionNum = prefs.getSessionNum(deckName)
-        val numOfNewCards: Int = prefs.getNumOfNewCards(deckName)
+        val numOfNewCardsLeft: Int = prefs.getNumOfNewCardsLeft(deckName)
         val cardsLeft: Int = studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
-        return cardsLeft + numOfNewCards
+        return cardsLeft + numOfNewCardsLeft
     }
 
     fun recoverNumOfCardsInSession(deckName: String): Int {
@@ -64,6 +64,24 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
 
     fun getAllCardsInDeck(deckName: String): List<StudyObject>{
         return studyObjectDao.getAllCardsInDeck(deckName)
+    }
+
+    fun getStudyObject(deckName: String): StudyObject? {
+        val sessionNum: Int = prefs.getSessionNum(deckName)
+        val numOfNewCardsLeft: Int = prefs.getNumOfNewCardsLeft(deckName)
+        val cardsLeft: Int = studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
+        val numOfCardsInSession: Int = getNumOfCardsInSession(deckName)
+        return if(numOfCardsInSession==0){
+            null
+        } else {
+            if((0..numOfCardsInSession).random() <= numOfNewCardsLeft){
+                //get new card
+                studyObjectDao.getStudyObject(-1, deckName)
+            } else {
+                //get card from current current session
+                studyObjectDao.getStudyObject(sessionNum, deckName)
+            }
+        }
     }
 
     private fun pom(): MutableList<MyValues> {
