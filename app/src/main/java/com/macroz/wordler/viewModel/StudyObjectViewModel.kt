@@ -50,6 +50,10 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
         return repository.getStudyObject(deckName)
     }
 
+    fun getStudyObject(Id: Int): StudyObject {
+        return repository.getStudyObject(Id)
+    }
+
     fun insert(studyObject: StudyObject) = viewModelScope.launch {
         repository.insert(studyObject)
     }

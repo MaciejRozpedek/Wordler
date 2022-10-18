@@ -8,6 +8,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.macroz.wordler.data.StudyObject
 import com.macroz.wordler.databinding.LearningScreenBinding
 
@@ -36,6 +38,7 @@ class LearningScreen: Fragment() {
         val sessionInfoTextView: TextView = view.findViewById(R.id.sessionInfoTextView)
         val progressBarLearn: ProgressBar = view.findViewById(R.id.progressBarLearn)
         val mainWordTextView: TextView = view.findViewById(R.id.mainWordTextView)
+
         val deckName: String = arguments?.getString("deckName")!!
         val studyObject: StudyObject? = m.studyObjectViewModel.getStudyObject(deckName)
         val numOfCardsInSession: Int = m.studyObjectViewModel.recoverNumOfCardsInSession(deckName)
@@ -45,7 +48,16 @@ class LearningScreen: Fragment() {
         if (studyObject != null) {
             mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
             binding.showAnswerButton.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putAll(arguments)
+                bundle.putInt("studyObject_Id", studyObject.id)
 
+                val navController: NavController = findNavController()
+                if (studyObject.lastWaitingTime == -1) {
+                    navController.navigate(R.id.action_LearningScreen_to_AnswerScreen3, bundle)
+                } else {
+                    navController.navigate(R.id.action_LearningScreen_to_AnswerScreen4, bundle)
+                }
             }
         } else {
             println("Number of cards in session equals 0")

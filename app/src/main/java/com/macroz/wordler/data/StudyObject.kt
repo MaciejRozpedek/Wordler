@@ -11,6 +11,7 @@ data class StudyObject (
     val wordGroupName: String,
     val mainWord: String,
     val mainWordDescription: String,
-    val subsidiaryWord: String,
-    val subsidiaryWordDescription: String
+    val answerWord: String,
+    val answerWordDescription: String,
+    val lastWaitingTime: Int
 )

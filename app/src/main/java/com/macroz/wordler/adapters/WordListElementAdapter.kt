@@ -21,7 +21,7 @@ class WordListElementAdapter :
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind(
-            current.mainWord, current.subsidiaryWord
+            current.mainWord, current.answerWord
         )
     }
 
@@ -53,7 +53,7 @@ class WordListElementAdapter :
 
             override fun areContentsTheSame(oldItem: StudyObject, newItem: StudyObject): Boolean {
                 return if (oldItem.mainWord == newItem.mainWord) {
-                    oldItem.subsidiaryWord == newItem.subsidiaryWord
+                    oldItem.answerWord == newItem.answerWord
                 } else {
                     oldItem.mainWord == newItem.mainWord
                 }

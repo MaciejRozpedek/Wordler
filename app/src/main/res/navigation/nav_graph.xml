@@ -44,6 +44,34 @@
         android:name="com.macroz.wordler.LearningScreen"
         android:label=""
         tools:layout="@layout/learning_screen">
+
+        <action
+            android:id="@+id/action_LearningScreen_to_AnswerScreen3"
+            app:destination="@id/AnswerScreen3" />
+        <action
+            android:id="@+id/action_LearningScreen_to_AnswerScreen4"
+            app:destination="@id/AnswerScreen4" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AnswerScreen3"
+        android:name="com.macroz.wordler.AnswerScreen3"
+        android:label=""
+        tools:layout="@layout/answer_screen_3">
+
+        <action
+            android:id="@+id/action_AnswerScreen3_to_LearningScreen"
+            app:destination="@id/LearningScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AnswerScreen4"
+        android:name="com.macroz.wordler.AnswerScreen4"
+        android:label=""
+        tools:layout="@layout/answer_screen_4">
+        <action
+            android:id="@+id/action_AnswerScreen4_to_LearningScreen"
+            app:destination="@id/LearningScreen" />
     </fragment>
 
     <fragment

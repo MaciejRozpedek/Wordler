@@ -23,6 +23,11 @@ interface StudyObjectDao {
             "LIMIT 1")
     fun getStudyObject(session_number: Int, deckName: String): StudyObject
 
+    @Query("SELECT *" +
+            "FROM studyObject_table " +
+            "WHERE id==:Id")
+    fun getStudyObject(Id: Int): StudyObject
+
     @Query("SELECT COUNT(*)" +
             "FROM studyObject_table " +
             "WHERE sessionNumber==:session_number AND wordGroupName==:deckName")

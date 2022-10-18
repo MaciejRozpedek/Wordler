@@ -53,14 +53,15 @@ class AddGroupScreen : Fragment() {
                     "MAIN",
                     "MAIN_DESCRIPTION",
                     "SUBS",
-                    "SUBS_DESCRIPTION"
+                    "SUBS_DESCRIPTION",
+                    -1
                 )
                 if(studyObject.wordGroupName == "cos"){ // for testing
                     repeat(10){
                         m.studyObjectViewModel.insert(
                             StudyObject(
                                 it + 732100, -1, "cos",
-                                "m", "md", "s", "sd"
+                                "m", "md", "s", "sd", -1
                             )
                         )
 //                        m.studyObjectViewModel.insert(studyObject)
@@ -70,7 +71,7 @@ class AddGroupScreen : Fragment() {
                         m.studyObjectViewModel.insert(
                             StudyObject(
                                 it + 1000001, 0, "cos",
-                                "m", "md", "s", "sd"
+                                "m", "md", "s", "sd", -1
                             )
                         )
 //                        m.studyObjectViewModel.insert(studyObject)
@@ -79,7 +80,7 @@ class AddGroupScreen : Fragment() {
                         m.studyObjectViewModel.insert(
                             StudyObject(
                                 it + 2000001, 1, "cos",
-                                "m", "md", "s", "sd"
+                                "m", "md", "s", "sd", -1
                             )
                         )
 //                        m.studyObjectViewModel.insert(studyObject)
