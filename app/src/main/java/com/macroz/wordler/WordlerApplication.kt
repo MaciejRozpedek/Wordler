@@ -11,9 +11,14 @@ val prefs: Prefs by lazy {
     WordlerApplication.prefs!!
 }
 
+val utensils: Utensils by lazy {
+    WordlerApplication.utensils!!
+}
+
 class WordlerApplication: Application() {
 
     companion object {
+        var utensils: Utensils? = null
         var prefs: Prefs? = null
         lateinit var instance: WordlerApplication
             private set
@@ -23,6 +28,7 @@ class WordlerApplication: Application() {
         super.onCreate()
 
         instance = this
+        utensils = Utensils(applicationContext)
         prefs = Prefs(applicationContext)
     }
 

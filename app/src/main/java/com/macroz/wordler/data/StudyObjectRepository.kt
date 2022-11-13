@@ -36,6 +36,18 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
         return cardsLeft + numOfNewCardsLeft
     }
 
+    fun getSession(sessionNum: Int, deckName: String): MutableList<StudyObject> {
+        return studyObjectDao.getSession(sessionNum, deckName)
+    }
+
+    fun getSession(sessionNum: Int, deckName: String, numOfCardsToGet: Int): MutableList<StudyObject> {
+        return studyObjectDao.getSession(sessionNum, deckName, numOfCardsToGet)
+    }
+
+    fun getNumOfCardsInSession(sessionNum: Int, deckName: String): Int {
+        return studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
+    }
+
     fun recoverNumOfCardsInSession(deckName: String): Int {
         return prefs.getNumOfCardsInSession(deckName)
     }
@@ -66,23 +78,23 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
         return studyObjectDao.getAllCardsInDeck(deckName)
     }
 
-    fun getStudyObject(deckName: String): StudyObject? {
-        val sessionNum: Int = prefs.getSessionNum(deckName)
-        val numOfNewCardsLeft: Int = prefs.getNumOfNewCardsLeft(deckName)
-        val cardsLeft: Int = studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
-        val numOfCardsInSession: Int = getNumOfCardsInSession(deckName)
-        return if(numOfCardsInSession==0){
-            null
-        } else {
-            if((0..numOfCardsInSession).random() <= numOfNewCardsLeft){
-                //get new card
-                studyObjectDao.getStudyObject(-1, deckName)
-            } else {
-                //get card from current current session
-                studyObjectDao.getStudyObject(sessionNum, deckName)
-            }
-        }
-    }
+//    fun getStudyObject(deckName: String): StudyObject? {
+//        val sessionNum: Int = prefs.getSessionNum(deckName)
+//        val numOfNewCardsLeft: Int = prefs.getNumOfNewCardsLeft(deckName)
+//        val cardsLeft: Int = studyObjectDao.getNumOfCardsInSession(sessionNum, deckName)
+//        val numOfCardsInSession: Int = getNumOfCardsInSession(deckName)
+//        return if(numOfCardsInSession==0){
+//            null
+//        } else {
+//            if((0..numOfCardsInSession).random() <= numOfNewCardsLeft){
+//                //get new card
+//                studyObjectDao.getStudyObject(-1, deckName)
+//            } else {
+//                //get card from current current session
+//                studyObjectDao.getStudyObject(sessionNum, deckName)
+//            }
+//        }
+//    }
 
     fun getStudyObject(Id: Int): StudyObject {
         return studyObjectDao.getStudyObject(Id)
@@ -113,5 +125,9 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
     @WorkerThread
     suspend fun insert(studyObject: StudyObject) {
         studyObjectDao.insert(studyObject)
+    }
+
+    suspend fun insertAndReplace(studyObject: StudyObject) {
+        studyObjectDao.insertAndReplace(studyObject)
     }
 }

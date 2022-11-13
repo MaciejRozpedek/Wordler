@@ -11,15 +11,19 @@ interface StudyObjectDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(studyObject: StudyObject)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAndReplace(studyObject: StudyObject)
+
     @Query("SELECT *" +
             "FROM studyObject_table " +
-            "WHERE wordGroupName==:deckName")
+            "WHERE wordGroupName==:deckName " +
+            "ORDER BY mainWord")
     fun getAllCardsInDeck(deckName: String): List<StudyObject>
 
     @Query("SELECT *" +
             "FROM studyObject_table " +
             "WHERE sessionNumber==:session_number AND wordGroupName==:deckName " +
-            "ORDER BY RANDOM() " +
+            "ORDER BY orderId " +
             "LIMIT 1")
     fun getStudyObject(session_number: Int, deckName: String): StudyObject
 
@@ -41,7 +45,14 @@ interface StudyObjectDao {
     @Query("SELECT * " +
             "FROM studyObject_table " +
             "WHERE sessionNumber==:session_number AND wordGroupName==:word_group_name")
-    fun getSession(session_number: Int, word_group_name: String): List<StudyObject>
+    fun getSession(session_number: Int, word_group_name: String): MutableList<StudyObject>
+
+    @Query("SELECT * " +
+            "FROM studyObject_table " +
+            "WHERE sessionNumber==:session_number AND wordGroupName==:word_group_name " +
+            "ORDER BY orderId " +
+            "LIMIT :numOfCardsToGet")
+    fun getSession(session_number: Int, word_group_name: String, numOfCardsToGet: Int): MutableList<StudyObject>
 
     @Query("SELECT COUNT(*) " +
             "FROM studyObject_table " +

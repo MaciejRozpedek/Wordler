@@ -14,6 +14,7 @@ import com.macroz.wordler.databinding.FragmentSecondBinding
 class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
+    private lateinit var m: MainActivity
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -23,6 +24,7 @@ class SecondFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        m = activity as MainActivity
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
         return binding.root
@@ -32,6 +34,8 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        prefs.setNumOfNewCards("Studying Test", 10)
+        m.studyObjectViewModel.updateNumOfCardsInSession("Studying Test")
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }

@@ -48,6 +48,7 @@ class AddGroupScreen : Fragment() {
                 prefs.setNumOfNewCards(groupName, 10)
                 val studyObject = StudyObject(
                     0,
+                    (0..Int.MAX_VALUE).random(),
                     0,
                     groupName,
                     "MAIN",
@@ -60,8 +61,8 @@ class AddGroupScreen : Fragment() {
                     repeat(10){
                         m.studyObjectViewModel.insert(
                             StudyObject(
-                                it + 732100, -1, "cos",
-                                "m", "md", "s", "sd", -1
+                                it + 732100, (0..Int.MAX_VALUE).random(), -1,
+                                "cos", "m", "md", "s", "sd", -1
                             )
                         )
 //                        m.studyObjectViewModel.insert(studyObject)
@@ -70,8 +71,8 @@ class AddGroupScreen : Fragment() {
                     repeat(7){
                         m.studyObjectViewModel.insert(
                             StudyObject(
-                                it + 1000001, 0, "cos",
-                                "m", "md", "s", "sd", -1
+                                it + 1000001, (0..Int.MAX_VALUE).random(), 0,
+                                "cos", "m", "md", "s", "sd", -1
                             )
                         )
 //                        m.studyObjectViewModel.insert(studyObject)
@@ -79,8 +80,8 @@ class AddGroupScreen : Fragment() {
                     repeat(3){
                         m.studyObjectViewModel.insert(
                             StudyObject(
-                                it + 2000001, 1, "cos",
-                                "m", "md", "s", "sd", -1
+                                it + 2000001, (0..Int.MAX_VALUE).random(), 1,
+                                "cos", "m", "md", "s", "sd", -1
                             )
                         )
 //                        m.studyObjectViewModel.insert(studyObject)

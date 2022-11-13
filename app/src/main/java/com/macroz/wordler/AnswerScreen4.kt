@@ -9,9 +9,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import com.macroz.wordler.data.StudyObject
 import com.macroz.wordler.databinding.AnswerScreen4Binding
 
 class AnswerScreen4: Fragment() {
+    private lateinit var m: MainActivity
     private var _binding: AnswerScreen4Binding? = null
 
     private val binding get() = _binding!!
@@ -20,6 +24,7 @@ class AnswerScreen4: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        m = activity as MainActivity
         _binding = AnswerScreen4Binding.inflate(inflater, container, false)
 
         (requireActivity() as AppCompatActivity).supportActionBar?.title =
@@ -37,6 +42,49 @@ class AnswerScreen4: Fragment() {
         val answerButtonTwo: Button = view.findViewById(R.id.answerButtonTwo4)
         val answerButtonThree: Button = view.findViewById(R.id.answerButtonThree4)
         val answerButtonFour: Button = view.findViewById(R.id.answerButtonFour4)
+
+        val deckName: String = arguments?.getString("deckName")!!
+        val numOfCardsInSession: Int = m.studyObjectViewModel.recoverNumOfCardsInSession(deckName)
+        val learnedInSession: Int = m.studyObjectViewModel.getNumOfCardsLearnedInSession(deckName)
+        val studyObjectId: Int = arguments?.getInt("studyObject_Id")!!
+        val studyObject: StudyObject = m.studyObjectViewModel.getStudyObject(studyObjectId)
+        val sessionNum: Int = prefs.getSessionNum(deckName)
+        sessionInfoTextView.text = "Finished $learnedInSession out of $numOfCardsInSession cards"
+        progressBar.progress = learnedInSession * 100 / (numOfCardsInSession + 1)
+        mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
+        answerTextView.text = "${studyObject.answerWord} (${studyObject.answerWordDescription})"
+        answerButtonOne.text = "DIDN'T KNOW (SEE IT AGAIN)"
+        answerButtonOne.setOnClickListener {
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
+        }
+        val waitingTime2: Int = studyObject.lastWaitingTime
+        answerButtonTwo.text = "HARD ($waitingTime2 DAYS)"
+        answerButtonTwo.setOnClickListener {
+            studyObject.sessionNumber = waitingTime2
+            studyObject.lastWaitingTime = waitingTime2
+            m.studyObjectViewModel.insertAndReplace(studyObject)
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
+        }
+        val waitingTime3: Int = utensils.nextFibonacci(waitingTime2)
+        answerButtonThree.text = "HARD ($waitingTime3 DAYS)"
+        answerButtonThree.setOnClickListener {
+            studyObject.sessionNumber = waitingTime3
+            studyObject.lastWaitingTime = waitingTime3
+            m.studyObjectViewModel.insertAndReplace(studyObject)
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
+        }
+        val waitingTime4: Int = utensils.nextFibonacci(waitingTime3)
+        answerButtonFour.text = "HARD ($waitingTime4 DAYS)"
+        answerButtonFour.setOnClickListener {
+            studyObject.sessionNumber = waitingTime4
+            studyObject.lastWaitingTime = waitingTime4
+            m.studyObjectViewModel.insertAndReplace(studyObject)
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
+        }
     }
 
     override fun onDestroyView() {

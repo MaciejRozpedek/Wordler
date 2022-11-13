@@ -29,6 +29,7 @@ class LearningScreen: Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.title =
             arguments?.getString("deckName")
+        println("OnCreateView called")
         return binding.root
     }
 
@@ -61,8 +62,16 @@ class LearningScreen: Fragment() {
             }
         } else {
             println("Number of cards in session equals 0")
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_LearningScreen_to_SetInfoScreen)
             TODO("There are no cards in session. Add Ended session screen")
         }
+        println("OnViewCreated called.")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("Resumed learning screen.")
     }
 
     override fun onDestroyView() {

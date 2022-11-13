@@ -7,11 +7,12 @@ import androidx.room.PrimaryKey
 data class StudyObject (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
+    val orderId: Int,   //TODO("to set when creating deck")
     var sessionNumber: Int,//-1 = not in session yet
     val wordGroupName: String,
     val mainWord: String,
     val mainWordDescription: String,
     val answerWord: String,
     val answerWordDescription: String,
-    val lastWaitingTime: Int
+    var lastWaitingTime: Int
 )

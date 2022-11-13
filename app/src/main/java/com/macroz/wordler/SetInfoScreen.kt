@@ -58,33 +58,34 @@ class SetInfoScreen : Fragment() {
         reviewCardsTextView.text = "Review Cards Today: ${arguments?.getInt("numOfCardsInSession")}"
 
 // this will be called when creating deck, but for now it stays here TODO()
-        prefs.setNumOfNewCards(deckName, 10)
-        m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+//        prefs.setNumOfNewCards(deckName, 10)
+//        m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
 // END
 
-        if(m.studyObjectViewModel.getNumOfCardsInSession(deckName) == 0){
-            startStudyingButton.text = "GET MORE CARDS"
-            binding.startStudyingButton.setOnClickListener {
-                startStudyingButton.text = "START STUDYING"
-                prefs.nextSession(deckName)
-                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
-                binding.startStudyingButton.setOnClickListener {
-                    val bundle = Bundle()
-                    bundle.putString("deckName", arguments?.getString("deckName"))
-
-                    val navController: NavController = findNavController()
-                    navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
-                }
-            }
-        } else {
-            binding.startStudyingButton.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString("deckName", arguments?.getString("deckName"))
-
-                val navController: NavController = findNavController()
-                navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
-            }
-        }
+//        if(m.studyObjectViewModel.getNumOfCardsInSession(deckName) == 0){
+//            startStudyingButton.text = "GET MORE CARDS"
+//            binding.startStudyingButton.setOnClickListener {
+//                startStudyingButton.text = "START STUDYING"
+//                prefs.nextSession(deckName)
+//                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+//                binding.startStudyingButton.setOnClickListener {
+//                    val bundle = Bundle()
+//                    bundle.putString("deckName", arguments?.getString("deckName"))
+//
+//                    val navController: NavController = findNavController()
+//                    navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
+//                }
+//            }
+//        } else {
+//            binding.startStudyingButton.setOnClickListener {
+//                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+//                val bundle = Bundle()
+//                bundle.putString("deckName", arguments?.getString("deckName"))
+//
+//                val navController: NavController = findNavController()
+//                navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
+//            }
+//        }
 
         binding.showWordListButton.setOnClickListener {
             val bundle = Bundle()
@@ -177,6 +178,7 @@ class SetInfoScreen : Fragment() {
         val progressBarInfo: ProgressBar = requireView().findViewById(R.id.progressBarInfo)
         val newCardsTextView: TextView = requireView().findViewById(R.id.newCardsTextView)
         val reviewCardsTextView: TextView = requireView().findViewById(R.id.reviewCardsTextView)
+        val startStudyingButton: Button = requireView().findViewById(R.id.startStudyingButton)
 
         newCardsLearned.text =
             "New Cards Learned: ${deckValues.numberOfCardsLearned} / ${deckValues.numberOfCardsInDeck}"
@@ -184,6 +186,30 @@ class SetInfoScreen : Fragment() {
             100 * deckValues.numberOfCardsLearned / deckValues.numberOfCardsInDeck
         newCardsTextView.text = "New Cards Today: ${deckValues.numOfNewCardsLeft}"
         reviewCardsTextView.text = "Review Cards Today: ${deckValues.numOfCardsInSession}"
+        if(m.studyObjectViewModel.getNumOfCardsInSession(deckName) == 0){
+            startStudyingButton.text = "GET MORE CARDS"
+            binding.startStudyingButton.setOnClickListener {
+                startStudyingButton.text = "START STUDYING"
+                prefs.nextSession(deckName)
+                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+                binding.startStudyingButton.setOnClickListener {
+                    val bundle = Bundle()
+                    bundle.putString("deckName", arguments?.getString("deckName"))
+
+                    val navController: NavController = findNavController()
+                    navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
+                }
+            }
+        } else {
+            binding.startStudyingButton.setOnClickListener {
+                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+                val bundle = Bundle()
+                bundle.putString("deckName", arguments?.getString("deckName"))
+
+                val navController: NavController = findNavController()
+                navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
+            }
+        }
     }
 
     override fun onDestroyView() {

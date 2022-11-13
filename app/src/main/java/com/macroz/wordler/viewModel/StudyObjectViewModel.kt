@@ -6,12 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.macroz.wordler.data.StudyObject
 import com.macroz.wordler.data.StudyObjectRepository
 import com.macroz.wordler.data.MyValues
+import com.macroz.wordler.prefs
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
+import kotlin.math.abs
+import kotlin.random.Random
 
 class StudyObjectViewModel(private val repository: StudyObjectRepository) : ViewModel() {
 
     var decksData: MutableList<MyValues> = repository.decksData
+    var sessionCards: MutableMap<String, MutableList<StudyObject>> = mutableMapOf()
 
     fun updateDecksData() {
         repository.updateDecksData()
@@ -47,7 +51,32 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
     }
 
     fun getStudyObject(deckName: String): StudyObject? {
-        return repository.getStudyObject(deckName)
+        if (sessionCards.containsKey(deckName)) {
+            if (sessionCards[deckName]!!.size == 0) {
+                println("sessionCards[$deckName] is empty.")
+                return null
+            }
+            if(prefs.isNumOfNewCardsChanged(deckName)) {
+                val numOfNewCards: Int = prefs.getNumOfNewCards(deckName)
+                val lastNumOfNewCards: Int = prefs.getLastNumOfNewCards(deckName)
+                prefs.setLastNumOfNewCards(deckName, numOfNewCards)
+                val diff: Int = numOfNewCards - lastNumOfNewCards
+                if (diff < 0) {
+                    repeat(abs(diff)) {
+                        sessionCards[deckName]?.removeLast()
+                    }
+                } else {
+                    sessionCards[deckName]!!.addAll(repository.getSession(-1, deckName, diff))
+                }
+            }
+        } else {
+            sessionCards[deckName] = mutableListOf()
+            val sessionNum: Int = prefs.getSessionNum(deckName)
+            val numOfNewCardsLeft = prefs.getNumOfNewCardsLeft(deckName)
+            sessionCards[deckName]!!.addAll(repository.getSession(sessionNum, deckName))
+            sessionCards[deckName]!!.addAll(repository.getSession(-1, deckName, numOfNewCardsLeft))
+        }
+        return sessionCards[deckName]!![Random.nextInt(sessionCards[deckName]!!.size)]
     }
 
     fun getStudyObject(Id: Int): StudyObject {
@@ -56,6 +85,12 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
 
     fun insert(studyObject: StudyObject) = viewModelScope.launch {
         repository.insert(studyObject)
+    }
+
+    fun insertAndReplace(studyObject: StudyObject) = viewModelScope.launch {
+        prefs.changeNumOfNewCardsLeft(studyObject.wordGroupName, -1)
+        sessionCards[studyObject.wordGroupName]?.removeAll { it.id == studyObject.id }
+        repository.insertAndReplace(studyObject)
     }
 }
 

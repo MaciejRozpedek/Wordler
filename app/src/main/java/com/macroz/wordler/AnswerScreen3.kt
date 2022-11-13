@@ -9,6 +9,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.macroz.wordler.data.StudyObject
 import com.macroz.wordler.databinding.AnswerScreen3Binding
 
@@ -45,10 +47,29 @@ class AnswerScreen3: Fragment() {
         val learnedInSession: Int = m.studyObjectViewModel.getNumOfCardsLearnedInSession(deckName)
         val studyObjectId: Int = arguments?.getInt("studyObject_Id")!!
         val studyObject: StudyObject = m.studyObjectViewModel.getStudyObject(studyObjectId)
+        val sessionNum: Int = prefs.getSessionNum(deckName)
         sessionInfoTextView.text = "Finished $learnedInSession out of $numOfCardsInSession cards"
         progressBar.progress = learnedInSession * 100 / (numOfCardsInSession + 1)
         mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
         answerTextView.text = "${studyObject.answerWord} (${studyObject.answerWordDescription})"
+        answerButtonOne.text = "DIDN'T KNOW (SEE IT AGAIN)"
+        answerButtonOne.setOnClickListener {
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_AnswerScreen3_to_LearningScreen)
+        }
+        answerButtonTwo.text = "GOOD (IN A FEW MINUTES)"
+        answerButtonTwo.setOnClickListener {
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_AnswerScreen3_to_LearningScreen)
+        }
+        answerButtonThree.text = "EASY (1 DAY)"
+        answerButtonThree.setOnClickListener {
+            studyObject.sessionNumber = sessionNum + 1
+            studyObject.lastWaitingTime = 1
+            m.studyObjectViewModel.insertAndReplace(studyObject)
+            val navController: NavController = findNavController()
+            navController.navigate(R.id.action_AnswerScreen3_to_LearningScreen)
+        }
     }
 
     override fun onDestroyView() {
