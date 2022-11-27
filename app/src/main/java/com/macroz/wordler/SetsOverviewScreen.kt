@@ -31,12 +31,6 @@ class SetsOverviewScreen : Fragment() {
 
         _binding = SetsOverviewScreenBinding.inflate(inflater, container, false)
 
-        val recyclerView = binding.recyclerviewOfGroups
-        val adapter = ElementDescribingSetOfWordsListAdapter()
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        adapter.submitList(m.studyObjectViewModel.decksData)
-
 
         return binding.root
 

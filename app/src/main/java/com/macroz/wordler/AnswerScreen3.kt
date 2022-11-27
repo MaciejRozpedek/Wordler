@@ -66,7 +66,7 @@ class AnswerScreen3: Fragment() {
         answerButtonThree.setOnClickListener {
             studyObject.sessionNumber = sessionNum + 1
             studyObject.lastWaitingTime = 1
-            m.studyObjectViewModel.insertAndReplace(studyObject)
+            m.studyObjectViewModel.insertAndReplace(studyObject, true)
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_AnswerScreen3_to_LearningScreen)
         }

@@ -14,12 +14,11 @@ import kotlin.random.Random
 
 class StudyObjectViewModel(private val repository: StudyObjectRepository) : ViewModel() {
 
-    var decksData: MutableList<MyValues> = repository.decksData
+    var decksData: MutableList<MyValues> = pom()
     var sessionCards: MutableMap<String, MutableList<StudyObject>> = mutableMapOf()
 
     fun updateDecksData() {
-        repository.updateDecksData()
-        decksData = repository.decksData
+        decksData = pom()
     }
 
     fun updateNumOfCardsInSession(deckName: String) {
@@ -53,8 +52,15 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
     fun getStudyObject(deckName: String): StudyObject? {
         if (sessionCards.containsKey(deckName)) {
             if (sessionCards[deckName]!!.size == 0) {
-                println("sessionCards[$deckName] is empty.")
-                return null
+                val sessionNum: Int = prefs.getSessionNum(deckName)
+                val numOfNewCardsLeft = prefs.getNumOfNewCardsLeft(deckName)
+                prefs.setIsNumOfNewCardsChanged(deckName, false)
+                sessionCards[deckName]!!.addAll(repository.getSession(sessionNum, deckName))
+                if (sessionCards[deckName]?.size == 0) {
+                    println("sessionCards[$deckName] is empty.")
+                    return null
+                }
+                sessionCards[deckName]!!.addAll(repository.getSession(-1, deckName, numOfNewCardsLeft))
             }
             if(prefs.isNumOfNewCardsChanged(deckName)) {
                 val numOfNewCards: Int = prefs.getNumOfNewCards(deckName)
@@ -73,6 +79,7 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
             sessionCards[deckName] = mutableListOf()
             val sessionNum: Int = prefs.getSessionNum(deckName)
             val numOfNewCardsLeft = prefs.getNumOfNewCardsLeft(deckName)
+            prefs.setIsNumOfNewCardsChanged(deckName, false)
             sessionCards[deckName]!!.addAll(repository.getSession(sessionNum, deckName))
             sessionCards[deckName]!!.addAll(repository.getSession(-1, deckName, numOfNewCardsLeft))
         }
@@ -87,10 +94,33 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
         repository.insert(studyObject)
     }
 
-    fun insertAndReplace(studyObject: StudyObject) = viewModelScope.launch {
-        prefs.changeNumOfNewCardsLeft(studyObject.wordGroupName, -1)
+    fun insertAndReplace(studyObject: StudyObject, isNew: Boolean) = viewModelScope.launch {
+        if(isNew) {
+            prefs.changeNumOfNewCardsLeft(studyObject.wordGroupName, -1)
+        }
         sessionCards[studyObject.wordGroupName]?.removeAll { it.id == studyObject.id }
         repository.insertAndReplace(studyObject)
+    }
+
+    private fun pom(): MutableList<MyValues> {
+        val wordGroupNames: MutableList<String> = repository.getDeckNames()
+        val decksDataPom: MutableList<MyValues> = mutableListOf()
+        wordGroupNames.forEach { deckName ->
+            val sth = MyValues("", 1, 1, 1, 1)
+            sth.deckName = deckName
+            sth.numberOfCardsInDeck = repository.getNumOfCardsInDeck(deckName)
+            sth.numberOfCardsLearned = repository.getNumOfCardsInDeckLearned(deckName)
+            sth.numOfNewCardsLeft = prefs.getNumOfNewCardsLeft(deckName)
+            val sessionNum = prefs.getSessionNum(deckName)
+            sth.numOfCardsInSession = repository.getNumOfCardsInSession(sessionNum, deckName)
+            decksDataPom.add(
+                MyValues(
+                    sth.deckName, sth.numberOfCardsLearned,
+                    sth.numberOfCardsInDeck, sth.numOfNewCardsLeft, sth.numOfCardsInSession
+                )
+            )
+        }
+        return decksDataPom
     }
 }
 

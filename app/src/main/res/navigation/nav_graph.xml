@@ -47,7 +47,7 @@
 
         <action
             android:id="@+id/action_LearningScreen_to_SetInfoScreen"
-            app:destination="@id/SetInfoScreenFragment" />
+            app:popUpTo="@id/SetInfoScreenFragment" />
         <action
             android:id="@+id/action_LearningScreen_to_AnswerScreen3"
             app:destination="@id/AnswerScreen3" />

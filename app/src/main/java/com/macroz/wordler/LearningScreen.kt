@@ -36,16 +36,10 @@ class LearningScreen: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sessionInfoTextView: TextView = view.findViewById(R.id.sessionInfoTextView)
-        val progressBarLearn: ProgressBar = view.findViewById(R.id.progressBarLearn)
         val mainWordTextView: TextView = view.findViewById(R.id.mainWordTextView)
 
         val deckName: String = arguments?.getString("deckName")!!
         val studyObject: StudyObject? = m.studyObjectViewModel.getStudyObject(deckName)
-        val numOfCardsInSession: Int = m.studyObjectViewModel.recoverNumOfCardsInSession(deckName)
-        val learnedInSession: Int = m.studyObjectViewModel.getNumOfCardsLearnedInSession(deckName)
-        sessionInfoTextView.text = "Finished $learnedInSession out of $numOfCardsInSession cards"
-        progressBarLearn.progress = learnedInSession * 100 / (numOfCardsInSession + 1)
         if (studyObject != null) {
             mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
             binding.showAnswerButton.setOnClickListener {
@@ -64,13 +58,20 @@ class LearningScreen: Fragment() {
             println("Number of cards in session equals 0")
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_LearningScreen_to_SetInfoScreen)
-            TODO("There are no cards in session. Add Ended session screen")
+//            TODO("There are no cards in session. Add Ended session screen")
         }
         println("OnViewCreated called.")
     }
 
     override fun onResume() {
         super.onResume()
+        val deckName: String = arguments?.getString("deckName")!!
+        val sessionInfoTextView: TextView = requireView().findViewById(R.id.sessionInfoTextView)
+        val progressBarLearn: ProgressBar = requireView().findViewById(R.id.progressBarLearn)
+        val numOfCardsInSession: Int = m.studyObjectViewModel.recoverNumOfCardsInSession(deckName)
+        val learnedInSession: Int = m.studyObjectViewModel.getNumOfCardsLearnedInSession(deckName)
+        sessionInfoTextView.text = "Finished $learnedInSession out of $numOfCardsInSession cards"
+        progressBarLearn.progress = learnedInSession * 100 / (numOfCardsInSession + 1)
         println("Resumed learning screen.")
     }
 

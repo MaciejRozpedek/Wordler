@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.macroz.wordler.data.MyValues
 import com.macroz.wordler.databinding.SetInfoScreenBinding
@@ -39,57 +40,12 @@ class SetInfoScreen : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val newCardsLearned: TextView = view.findViewById(R.id.newCardsLearned)
-        val progressBarInfo: ProgressBar = view.findViewById(R.id.progressBarInfo)
-        val newCardsTextView: TextView = view.findViewById(R.id.newCardsTextView)
-        val reviewCardsTextView: TextView = view.findViewById(R.id.reviewCardsTextView)
-        val startStudyingButton: Button = view.findViewById(R.id.startStudyingButton)
         val deckName = arguments?.getString("deckName")!!
 
-        newCardsLearned.text = "New Cards Learned: ${
-            arguments?.getInt("numOfCardsLearned")
-        } / ${
-            arguments?.getInt("numOfCardsInDeck")
-        }"
-        progressBarInfo.progress = arguments?.getInt("progress")!!
-        newCardsTextView.text = "New Cards Today: ${arguments?.getInt("numOfNewCardsLeft")}"
-        reviewCardsTextView.text = "Review Cards Today: ${arguments?.getInt("numOfCardsInSession")}"
-
-// this will be called when creating deck, but for now it stays here TODO()
-//        prefs.setNumOfNewCards(deckName, 10)
-//        m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
-// END
-
-//        if(m.studyObjectViewModel.getNumOfCardsInSession(deckName) == 0){
-//            startStudyingButton.text = "GET MORE CARDS"
-//            binding.startStudyingButton.setOnClickListener {
-//                startStudyingButton.text = "START STUDYING"
-//                prefs.nextSession(deckName)
-//                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
-//                binding.startStudyingButton.setOnClickListener {
-//                    val bundle = Bundle()
-//                    bundle.putString("deckName", arguments?.getString("deckName"))
-//
-//                    val navController: NavController = findNavController()
-//                    navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
-//                }
-//            }
-//        } else {
-//            binding.startStudyingButton.setOnClickListener {
-//                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
-//                val bundle = Bundle()
-//                bundle.putString("deckName", arguments?.getString("deckName"))
-//
-//                val navController: NavController = findNavController()
-//                navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
-//            }
-//        }
 
         binding.showWordListButton.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("deckName", arguments?.getString("deckName"))
+            bundle.putString("deckName", deckName)
 
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_SetInfoScreen_to_WordListScreen, bundle)
@@ -107,8 +63,7 @@ class SetInfoScreen : Fragment() {
                     val pom: String = input.text.toString()
                     val value: Int? = pom.toIntOrNull()
                     if (value != null) {
-                        arguments?.getString("deckName")
-                            ?.let { it1 -> prefs.setNumOfNewCards(it1, value) }
+                        prefs.setNumOfNewCards(deckName, value)
                         Toast.makeText(
                             m.applicationContext,
                             "Changed successfully",
@@ -184,7 +139,7 @@ class SetInfoScreen : Fragment() {
             "New Cards Learned: ${deckValues.numberOfCardsLearned} / ${deckValues.numberOfCardsInDeck}"
         progressBarInfo.progress =
             100 * deckValues.numberOfCardsLearned / deckValues.numberOfCardsInDeck
-        newCardsTextView.text = "New Cards Today: ${deckValues.numOfNewCardsLeft}"
+        newCardsTextView.text = "New Cards Today: ${prefs.getNumOfNewCardsLeft(deckName)}"
         reviewCardsTextView.text = "Review Cards Today: ${deckValues.numOfCardsInSession}"
         if(m.studyObjectViewModel.getNumOfCardsInSession(deckName) == 0){
             startStudyingButton.text = "GET MORE CARDS"
@@ -192,9 +147,17 @@ class SetInfoScreen : Fragment() {
                 startStudyingButton.text = "START STUDYING"
                 prefs.nextSession(deckName)
                 m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+                m.studyObjectViewModel.updateDecksData()
+                findNavController().navigate( // recreate this
+                    R.id.SetInfoScreenFragment,
+                    arguments,
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.SetInfoScreenFragment, true)
+                        .build()
+                )
                 binding.startStudyingButton.setOnClickListener {
                     val bundle = Bundle()
-                    bundle.putString("deckName", arguments?.getString("deckName"))
+                    bundle.putString("deckName", deckName)
 
                     val navController: NavController = findNavController()
                     navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)
@@ -204,7 +167,7 @@ class SetInfoScreen : Fragment() {
             binding.startStudyingButton.setOnClickListener {
                 m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
                 val bundle = Bundle()
-                bundle.putString("deckName", arguments?.getString("deckName"))
+                bundle.putString("deckName", deckName)
 
                 val navController: NavController = findNavController()
                 navController.navigate(R.id.action_SetInfoScreen_to_LearningScreen, bundle)

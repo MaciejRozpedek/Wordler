@@ -61,27 +61,27 @@ class AnswerScreen4: Fragment() {
         val waitingTime2: Int = studyObject.lastWaitingTime
         answerButtonTwo.text = "HARD ($waitingTime2 DAYS)"
         answerButtonTwo.setOnClickListener {
-            studyObject.sessionNumber = waitingTime2
+            studyObject.sessionNumber += waitingTime2
             studyObject.lastWaitingTime = waitingTime2
-            m.studyObjectViewModel.insertAndReplace(studyObject)
+            m.studyObjectViewModel.insertAndReplace(studyObject, false)
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
         }
         val waitingTime3: Int = utensils.nextFibonacci(waitingTime2)
-        answerButtonThree.text = "HARD ($waitingTime3 DAYS)"
+        answerButtonThree.text = "GOOD ($waitingTime3 DAYS)"
         answerButtonThree.setOnClickListener {
-            studyObject.sessionNumber = waitingTime3
+            studyObject.sessionNumber += waitingTime3
             studyObject.lastWaitingTime = waitingTime3
-            m.studyObjectViewModel.insertAndReplace(studyObject)
+            m.studyObjectViewModel.insertAndReplace(studyObject, false)
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
         }
         val waitingTime4: Int = utensils.nextFibonacci(waitingTime3)
-        answerButtonFour.text = "HARD ($waitingTime4 DAYS)"
+        answerButtonFour.text = "EASY ($waitingTime4 DAYS)"
         answerButtonFour.setOnClickListener {
-            studyObject.sessionNumber = waitingTime4
+            studyObject.sessionNumber += waitingTime4
             studyObject.lastWaitingTime = waitingTime4
-            m.studyObjectViewModel.insertAndReplace(studyObject)
+            m.studyObjectViewModel.insertAndReplace(studyObject, false)
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
         }

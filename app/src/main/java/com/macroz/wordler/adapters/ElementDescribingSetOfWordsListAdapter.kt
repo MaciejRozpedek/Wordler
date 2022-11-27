@@ -26,7 +26,7 @@ class ElementDescribingSetOfWordsListAdapter :
     override fun onBindViewHolder(holder: StudyObjectViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind(
-            current.nameOfSetOfWords,
+            current.deckName,
             current.numberOfCardsInDeck,
             current.numberOfCardsLearned,
             current.numOfNewCardsLeft,
@@ -53,11 +53,6 @@ class ElementDescribingSetOfWordsListAdapter :
             itemView.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putString("deckName", nameOfDeck)
-                bundle.putInt("numOfCardsLearned", numOfCardsLearned)
-                bundle.putInt("numOfCardsInDeck", numOfCardsInDeck)
-                bundle.putInt("progress", progressBarMain.progress)
-                bundle.putInt("numOfNewCardsLeft", numOfNewCardsLeft)
-                bundle.putInt("numOfCardsInSession", numOfCardsInSession)
 
                 val navController: NavController = Navigation.findNavController(itemView)
                 navController.navigate(R.id.action_FirstFragment_to_SetInfoScreen, bundle)
@@ -81,7 +76,7 @@ class ElementDescribingSetOfWordsListAdapter :
             }
 
             override fun areContentsTheSame(oldItem: MyValues, newItem: MyValues): Boolean {
-                return oldItem.nameOfSetOfWords == newItem.nameOfSetOfWords
+                return oldItem.deckName == newItem.deckName
             }
         }
     }
