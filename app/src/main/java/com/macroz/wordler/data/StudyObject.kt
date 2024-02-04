@@ -14,5 +14,5 @@ data class StudyObject (
     val mainWordDescription: String,
     val answerWord: String,
     val answerWordDescription: String,
-    var lastWaitingTime: Int
+    var lastWaitingTime: Int    // -1 = "new card", -2 = "review card"
 )

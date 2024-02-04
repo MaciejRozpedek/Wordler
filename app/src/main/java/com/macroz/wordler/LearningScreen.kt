@@ -48,7 +48,7 @@ class LearningScreen: Fragment() {
                 bundle.putInt("studyObject_Id", studyObject.id)
 
                 val navController: NavController = findNavController()
-                if (studyObject.lastWaitingTime == -1) {
+                if (studyObject.lastWaitingTime < 0) {
                     navController.navigate(R.id.action_LearningScreen_to_AnswerScreen3, bundle)
                 } else {
                     navController.navigate(R.id.action_LearningScreen_to_AnswerScreen4, bundle)

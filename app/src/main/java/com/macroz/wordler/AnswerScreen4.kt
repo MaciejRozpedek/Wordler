@@ -55,6 +55,8 @@ class AnswerScreen4: Fragment() {
         answerTextView.text = "${studyObject.answerWord} (${studyObject.answerWordDescription})"
         answerButtonOne.text = "DIDN'T KNOW (SEE IT AGAIN)"
         answerButtonOne.setOnClickListener {
+            studyObject.lastWaitingTime = -2
+            m.studyObjectViewModel.insertAndReplace(studyObject, false)
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_AnswerScreen4_to_LearningScreen)
         }

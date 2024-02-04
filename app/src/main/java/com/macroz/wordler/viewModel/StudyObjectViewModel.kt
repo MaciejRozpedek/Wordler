@@ -94,6 +94,7 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
         repository.insert(studyObject)
     }
 
+    // isNew = was added in current session
     fun insertAndReplace(studyObject: StudyObject, isNew: Boolean) = viewModelScope.launch {
         if(isNew) {
             prefs.changeNumOfNewCardsLeft(studyObject.wordGroupName, -1)
