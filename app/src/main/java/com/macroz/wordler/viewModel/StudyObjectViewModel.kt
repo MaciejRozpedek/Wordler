@@ -83,7 +83,12 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
             sessionCards[deckName]!!.addAll(repository.getSession(sessionNum, deckName))
             sessionCards[deckName]!!.addAll(repository.getSession(-1, deckName, numOfNewCardsLeft))
         }
-        return sessionCards[deckName]!![Random.nextInt(sessionCards[deckName]!!.size)]
+        if (sessionCards[deckName]?.size == 0) {
+            println("sessionCards[$deckName] is empty.")
+            return null
+        } else {
+            return sessionCards[deckName]!![Random.nextInt(sessionCards[deckName]!!.size)]
+        }
     }
 
     fun getStudyObject(Id: Int): StudyObject {
