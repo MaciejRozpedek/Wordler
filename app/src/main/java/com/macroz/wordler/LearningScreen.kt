@@ -57,7 +57,7 @@ class LearningScreen: Fragment() {
         } else {
             println("Number of cards in session equals 0")
             val navController: NavController = findNavController()
-            navController.navigate(R.id.action_LearningScreen_to_SetInfoScreen)
+            navController.navigate(R.id.action_LearningScreen_to_SessionEndScreen)
 //            TODO("There are no cards in session. Add Ended session screen")
         }
         println("OnViewCreated called.")

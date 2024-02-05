@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_LearningScreen_to_AnswerScreen4"
             app:destination="@id/AnswerScreen4" />
+        <action
+            android:id="@+id/action_LearningScreen_to_SessionEndScreen"
+            app:destination="@id/SessionEndScreen" />
     </fragment>
 
     <fragment
@@ -64,7 +67,7 @@
 
         <action
             android:id="@+id/action_AnswerScreen3_to_LearningScreen"
-            app:popUpTo="@+id/LearningScreen"/>
+            app:popUpTo="@+id/LearningScreen" />
     </fragment>
 
     <fragment
@@ -75,6 +78,16 @@
         <action
             android:id="@+id/action_AnswerScreen4_to_LearningScreen"
             app:popUpTo="@id/LearningScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SessionEndScreen"
+        android:name="com.macroz.wordler.viewModel.SessionEndScreen"
+        android:label="Study Complete!"
+        tools:layout="@layout/session_end_screen">
+        <action
+            android:id="@+id/action_sessionEndScreen_to_SetInfoScreen"
+            app:popUpTo="@id/SetInfoScreenFragment" />
     </fragment>
 
     <fragment

@@ -38,7 +38,7 @@ interface StudyObjectDao {
     fun getNumOfStudyObjectsInSession(session_number: Int, deckName: String): Int
 
     @Query("UPDATE studyObject_table " +
-            "SET sessionNumber = -1 " +
+            "SET sessionNumber = -1, lastWaitingTime = -1 " +
             "WHERE wordGroupName==:deckName")
     fun resetDeck(deckName: String)
 
