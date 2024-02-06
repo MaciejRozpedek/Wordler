@@ -42,7 +42,7 @@ class Prefs(context: Context) {
         editor.commit()
     }
 
-    private fun setNumOfNewCardsLeft(deckName: String, numOfNewCardsLeft: Int) {
+    fun setNumOfNewCardsLeft(deckName: String, numOfNewCardsLeft: Int) {
         editor.remove("NUM_OF_NEW_CARDS_LEFT_$deckName")
         editor.putInt("NUM_OF_NEW_CARDS_LEFT_$deckName", numOfNewCardsLeft)
         editor.commit()

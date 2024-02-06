@@ -43,6 +43,10 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
 
     fun resetDeck(deckName: String) {
         repository.resetDeck(deckName)
+        sessionCards[deckName]?.clear()
+        prefs.setNumOfNewCardsLeft(deckName, prefs.getNumOfNewCards(deckName))
+        prefs.setLastNumOfNewCards(deckName, prefs.getNumOfNewCards(deckName))
+        prefs.setIsNumOfNewCardsChanged(deckName, false)
     }
 
     fun getAllCardsInDeck(deckName: String): List<StudyObject> {
@@ -56,10 +60,6 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
                 val numOfNewCardsLeft = prefs.getNumOfNewCardsLeft(deckName)
                 prefs.setIsNumOfNewCardsChanged(deckName, false)
                 sessionCards[deckName]!!.addAll(repository.getSession(sessionNum, deckName))
-                if (sessionCards[deckName]?.size == 0) {
-                    println("sessionCards[$deckName] is empty.")
-                    return null
-                }
                 sessionCards[deckName]!!.addAll(repository.getSession(-1, deckName, numOfNewCardsLeft))
             }
             if(prefs.isNumOfNewCardsChanged(deckName)) {

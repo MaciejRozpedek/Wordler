@@ -57,6 +57,7 @@ class SetInfoScreen : Fragment() {
 //            alert.setMessage("Message")
             // Set an EditText view to get user input
             val input = EditText(context)
+            input.setText("${prefs.getNumOfNewCards(deckName)}")
             alert.setView(input)
             alert.setPositiveButton("Set",
                 DialogInterface.OnClickListener { dialog, whichButton ->
