@@ -61,14 +61,14 @@ abstract class StudyObjectDataBase : RoomDatabase() {
             studyObjectDao.deleteAll()
 
             var studyObject = StudyObject(
-                0, (0..Int.MAX_VALUE).random(), -1,
+                0, (0..Long.MAX_VALUE).random(), -1,
                 "ACT vocabulary", "m", "md", "s", "sd", -1
             )
             repeat(50) {
                 studyObjectDao.insert(
                     StudyObject(
                         it+2345,
-                        it,
+                        it.toLong(),
                         -1,
                         "Studying Test",
                         "main${it + 1}",
@@ -82,7 +82,7 @@ abstract class StudyObjectDataBase : RoomDatabase() {
             repeat(10) {
                 studyObjectDao.insert(
                     StudyObject(
-                        it + 1, (0..Int.MAX_VALUE).random(), -1,
+                        it + 1, (0..Long.MAX_VALUE).random(), -1,
                         "ACT vocabulary", "m", "md", "s", "sd", -1
                     )
                 )
@@ -90,25 +90,25 @@ abstract class StudyObjectDataBase : RoomDatabase() {
             repeat(15) {
                 studyObjectDao.insert(
                     StudyObject(
-                        it + 1001, (0..Int.MAX_VALUE).random(), -1,
+                        it + 1001, (0..Long.MAX_VALUE).random(), -1,
                         "ACT vocabulary", "m", "md", "s", "sd", -1
                     )
                 )
             }
             studyObject = StudyObject(
-                0, (0..Int.MAX_VALUE).random(), -1,
+                0, (0..Long.MAX_VALUE).random(), -1,
                 "English C1", "main1", "mainD1",
                 "subs1", "subsD1", -1
             )
             studyObjectDao.insert(studyObject)
             studyObject = StudyObject(
-                0, (0..Int.MAX_VALUE).random(), -1,
+                0, (0..Long.MAX_VALUE).random(), -1,
                 "English C1", "main2", "mainD2",
                 "subs2", "subsD2", -1
             )
             studyObjectDao.insert(studyObject)
             studyObject = StudyObject(
-                0, (0..Int.MAX_VALUE).random(), -1,
+                0, (0..Long.MAX_VALUE).random(), -1,
                 "English C1", "main3", "mainD3",
                 "subs3", "subsD3", -1
             )

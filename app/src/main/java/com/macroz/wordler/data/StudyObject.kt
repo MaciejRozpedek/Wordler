@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class StudyObject (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val orderId: Int,   //TODO("to set when creating deck")
+    val orderId: Long,   // order of adding NEW cards to the learning session
     var sessionNumber: Int,//-1 = not in session yet
     val wordGroupName: String,
     val mainWord: String,

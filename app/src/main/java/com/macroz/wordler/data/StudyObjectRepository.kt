@@ -88,6 +88,10 @@ class StudyObjectRepository(private val studyObjectDao: StudyObjectDao) {
         return studyObjectDao.getNumberOfWordsInDeckLearned(deckName)
     }
 
+    fun randomizeOrderId(deckName: String) {
+        studyObjectDao.randomizeOrderId(deckName)
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(studyObject: StudyObject) {

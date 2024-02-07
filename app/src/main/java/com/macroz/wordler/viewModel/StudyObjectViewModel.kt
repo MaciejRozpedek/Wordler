@@ -43,6 +43,7 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
 
     fun resetDeck(deckName: String) {
         repository.resetDeck(deckName)
+        repository.randomizeOrderId(deckName)
         sessionCards[deckName]?.clear()
         prefs.setNumOfNewCardsLeft(deckName, prefs.getNumOfNewCards(deckName))
         prefs.setLastNumOfNewCards(deckName, prefs.getNumOfNewCards(deckName))

@@ -76,6 +76,11 @@ interface StudyObjectDao {
             "WHERE wordGroupName==:word_group_name AND sessionNumber!=-1")
     fun getNumberOfWordsInDeckLearned(word_group_name: String):Int
 
+    @Query("UPDATE studyObject_table " +
+            "SET orderId = RANDOM() " +
+            "WHERE wordGroupName==:word_group_name")
+    fun randomizeOrderId(word_group_name: String)
+
 
 
     @Query("SELECT COUNT(*) " +
