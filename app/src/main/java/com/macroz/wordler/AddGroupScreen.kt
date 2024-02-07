@@ -34,63 +34,52 @@ class AddGroupScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val editWordView = view.findViewById<EditText>(R.id.edit_group_name)
+        val editTextDeckName = view.findViewById<EditText>(R.id.editTextDeckName)
+        val editTextQuestion = view.findViewById<EditText>(R.id.editTextQuestion)
+        val editTextQuestionDescription = view.findViewById<EditText>(R.id.editTextQuestionDescription)
+        val editTextAnswer = view.findViewById<EditText>(R.id.editTextAnswer)
+        val editTextAnswerDescription = view.findViewById<EditText>(R.id.editTextAnswerDescription)
 
         binding.buttonSave.setOnClickListener {
-            if(TextUtils.isEmpty(editWordView.text)) {
+            if(TextUtils.isEmpty(editTextDeckName.text)) {
                 Toast.makeText(
                     m.applicationContext,
-                    "Word not saved because it is empty.",
-                    Toast.LENGTH_LONG
+                    "Deck name field cannot be empty",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (TextUtils.isEmpty(editTextQuestion.text)) {
+                Toast.makeText(
+                    m.applicationContext,
+                    "Question field cannot be empty",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (TextUtils.isEmpty(editTextAnswer.text)) {
+                Toast.makeText(
+                    m.applicationContext,
+                    "Answer field cannot be empty",
+                    Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val groupName =editWordView.text.toString()
-                prefs.setNumOfNewCards(groupName, 10)
+                val deckName = editTextDeckName.text.toString()
+                val question = editTextQuestion.text.toString()
+                val questionDescription = editTextQuestionDescription.text.toString()
+                val answer = editTextAnswer.text.toString()
+                val answerDescription = editTextAnswerDescription.text.toString()
+
                 val studyObject = StudyObject(
                     0,
                     (0..Long.MAX_VALUE).random(),
-                    0,
-                    groupName,
-                    "MAIN",
-                    "MAIN_DESCRIPTION",
-                    "SUBS",
-                    "SUBS_DESCRIPTION",
+                    -1,
+                    deckName,
+                    question,
+                    questionDescription,
+                    answer,
+                    answerDescription,
                     -1
                 )
-                if(studyObject.wordGroupName == "cos"){ // for testing
-                    repeat(10){
-                        m.studyObjectViewModel.insert(
-                            StudyObject(
-                                it + 732100, (0..Long.MAX_VALUE).random(), -1,
-                                "cos", "m", "md", "s", "sd", -1
-                            )
-                        )
-//                        m.studyObjectViewModel.insert(studyObject)
-                    }
-                    studyObject.sessionNumber = 1
-                    repeat(7){
-                        m.studyObjectViewModel.insert(
-                            StudyObject(
-                                it + 1000001, (0..Long.MAX_VALUE).random(), 0,
-                                "cos", "m", "md", "s", "sd", -1
-                            )
-                        )
-//                        m.studyObjectViewModel.insert(studyObject)
-                    }
-                    repeat(3){
-                        m.studyObjectViewModel.insert(
-                            StudyObject(
-                                it + 2000001, (0..Long.MAX_VALUE).random(), 1,
-                                "cos", "m", "md", "s", "sd", -1
-                            )
-                        )
-//                        m.studyObjectViewModel.insert(studyObject)
-                    }
-                } else {
-                    m.studyObjectViewModel.insert(studyObject)
-                }
+                m.studyObjectViewModel.insert(studyObject)
+                findNavController().navigate(R.id.action_addGroupFragment_to_FirstFragment)
             }
-            findNavController().navigate(R.id.action_addGroupFragment_to_FirstFragment)
         }
     }
 
