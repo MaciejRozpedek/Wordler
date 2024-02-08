@@ -12,9 +12,6 @@
         tools:layout="@layout/sets_overview_screen">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-        <action
             android:id="@+id/action_FirstFragment_to_AddGroupFragment"
             app:destination="@id/addGroupFragment" />
         <action
@@ -103,17 +100,6 @@
         tools:layout="@layout/add_group_screen">
         <action
             android:id="@+id/action_addGroupFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.macroz.wordler.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
