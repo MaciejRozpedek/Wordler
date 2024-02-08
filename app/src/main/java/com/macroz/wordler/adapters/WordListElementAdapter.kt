@@ -21,7 +21,7 @@ class WordListElementAdapter :
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind(
-            current.mainWord, current.answerWord
+            current.mainWord, current.mainWordDescription, current.answerWord, current.answerWordDescription
         )
     }
 
@@ -30,10 +30,18 @@ class WordListElementAdapter :
         private val subsWordTextView: TextView = itemView.findViewById(R.id.subsidiaryWord)
 
         fun bind(
-            mainWord: String, subsidiaryWord: String
+            mainWord: String, mainWordDescription: String, answerWord: String, answerWordDescription: String
         ) {
-            mainWordTextView.text = mainWord
-            subsWordTextView.text = subsidiaryWord
+            if (mainWordDescription == null || mainWordDescription == "") {
+                mainWordTextView.text = mainWord
+            } else {
+                mainWordTextView.text = "${mainWord} (${mainWordDescription})"
+            }
+            if (answerWordDescription == null || answerWordDescription == "") {
+                subsWordTextView.text = answerWord
+            } else {
+                subsWordTextView.text = "${answerWord} (${answerWordDescription})"
+            }
         }
 
         companion object {
