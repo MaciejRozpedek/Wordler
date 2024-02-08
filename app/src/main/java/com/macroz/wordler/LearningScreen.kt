@@ -41,7 +41,11 @@ class LearningScreen: Fragment() {
         val deckName: String = arguments?.getString("deckName")!!
         val studyObject: StudyObject? = m.studyObjectViewModel.getStudyObject(deckName)
         if (studyObject != null) {
-            mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
+            if (studyObject.mainWordDescription == null || studyObject.mainWordDescription == "") {
+                mainWordTextView.text = studyObject.mainWord
+            } else {
+                mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
+            }
             binding.showAnswerButton.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putAll(arguments)
@@ -58,7 +62,6 @@ class LearningScreen: Fragment() {
             println("Number of cards in session equals 0")
             val navController: NavController = findNavController()
             navController.navigate(R.id.action_LearningScreen_to_SessionEndScreen)
-//            TODO("There are no cards in session. Add Ended session screen")
         }
         println("OnViewCreated called.")
     }

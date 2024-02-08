@@ -51,8 +51,16 @@ class AnswerScreen4: Fragment() {
         val sessionNum: Int = prefs.getSessionNum(deckName)
         sessionInfoTextView.text = "Finished $learnedInSession out of $numOfCardsInSession cards"
         progressBar.progress = learnedInSession * 100 / (numOfCardsInSession + 1)
-        mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
-        answerTextView.text = "${studyObject.answerWord} (${studyObject.answerWordDescription})"
+        if (studyObject.mainWordDescription == null || studyObject.mainWordDescription == "") {
+            mainWordTextView.text = studyObject.mainWord
+        } else {
+            mainWordTextView.text = "${studyObject.mainWord} (${studyObject.mainWordDescription})"
+        }
+        if (studyObject.answerWordDescription == null || studyObject.answerWordDescription == "") {
+            answerTextView.text = studyObject.answerWord
+        } else {
+            answerTextView.text = "${studyObject.answerWord} (${studyObject.answerWordDescription})"
+        }
         answerButtonOne.text = "DIDN'T KNOW (SEE IT AGAIN)"
         answerButtonOne.setOnClickListener {
             studyObject.lastWaitingTime = -2
