@@ -40,7 +40,9 @@ class AddGroupScreen : Fragment() {
         val editTextAnswer = view.findViewById<EditText>(R.id.editTextAnswer)
         val editTextAnswerDescription = view.findViewById<EditText>(R.id.editTextAnswerDescription)
 
+        editTextDeckName.setText(prefs.getLastAddedDeckName())
         binding.buttonSave.setOnClickListener {
+            prefs.setLastAddedDeckName(editTextDeckName.text.toString())
             if(TextUtils.isEmpty(editTextDeckName.text)) {
                 Toast.makeText(
                     m.applicationContext,

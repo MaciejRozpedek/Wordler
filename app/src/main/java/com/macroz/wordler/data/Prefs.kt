@@ -91,4 +91,14 @@ class Prefs(context: Context) {
         editor.putInt("SESSION_NUM_$deckName", pom)
         editor.commit()
     }
+
+    fun setLastAddedDeckName(deckName: String) {
+        editor.remove("LAST_ADDED_DECK_NAME")
+        editor.putString("LAST_ADDED_DECK_NAME", deckName)
+        editor.commit()
+    }
+
+    fun getLastAddedDeckName(): String {
+        return preferences.getString("LAST_ADDED_DECK_NAME", "").toString()
+    }
 }
