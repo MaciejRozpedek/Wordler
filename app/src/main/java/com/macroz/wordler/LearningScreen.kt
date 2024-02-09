@@ -74,7 +74,11 @@ class LearningScreen: Fragment() {
         val numOfCardsInSession: Int = m.studyObjectViewModel.recoverNumOfCardsInSession(deckName)
         val learnedInSession: Int = m.studyObjectViewModel.getNumOfCardsLearnedInSession(deckName)
         sessionInfoTextView.text = "Finished $learnedInSession out of $numOfCardsInSession cards"
-        progressBarLearn.progress = learnedInSession * 100 / (numOfCardsInSession + 1)
+        if (numOfCardsInSession == 0) {
+            progressBarLearn.progress = 100
+        } else {
+            progressBarLearn.progress = learnedInSession * 100 / (numOfCardsInSession)
+        }
         println("Resumed learning screen.")
     }
 

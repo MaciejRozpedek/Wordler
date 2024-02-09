@@ -166,7 +166,7 @@ class SetInfoScreen : Fragment() {
             }
         } else {
             binding.startStudyingButton.setOnClickListener {
-                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
+//                m.studyObjectViewModel.updateNumOfCardsInSession(deckName)
                 val bundle = Bundle()
                 bundle.putString("deckName", deckName)
 

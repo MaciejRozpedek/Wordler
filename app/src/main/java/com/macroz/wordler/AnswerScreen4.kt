@@ -50,7 +50,12 @@ class AnswerScreen4: Fragment() {
         val studyObject: StudyObject = m.studyObjectViewModel.getStudyObject(studyObjectId)
         val sessionNum: Int = prefs.getSessionNum(deckName)
         sessionInfoTextView.text = "Finished $learnedInSession out of $numOfCardsInSession cards"
-        progressBar.progress = learnedInSession * 100 / (numOfCardsInSession + 1)
+        if (numOfCardsInSession == 0) {
+            progressBar.progress = 100
+        } else {
+            progressBar.progress = learnedInSession * 100 / (numOfCardsInSession)
+        }
+
         if (studyObject.mainWordDescription == null || studyObject.mainWordDescription == "") {
             mainWordTextView.text = studyObject.mainWord
         } else {

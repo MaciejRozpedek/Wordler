@@ -48,6 +48,7 @@ class StudyObjectViewModel(private val repository: StudyObjectRepository) : View
         prefs.setNumOfNewCardsLeft(deckName, prefs.getNumOfNewCards(deckName))
         prefs.setLastNumOfNewCards(deckName, prefs.getNumOfNewCards(deckName))
         prefs.setIsNumOfNewCardsChanged(deckName, false)
+        updateNumOfCardsInSession(deckName)
     }
 
     fun getAllCardsInDeck(deckName: String): List<StudyObject> {
